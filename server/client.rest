@@ -41,7 +41,7 @@ Content-Type: application/json
 }
 
 ### test email doesn't exsits 
-POST http://localhost:3001/user/reset-password
+POST http://localhost:3001/user/check-email
 Content-Type: application/json
 
 {

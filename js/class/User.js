@@ -83,21 +83,43 @@ class User {
         body: data,
       });
 
-      if (response.status === 200) {
-        // Email exists
+      if (response.ok === true) {
         const json = await response.json();
         return json.exists;
-      } else if (response.status === 404) {
-        // Email does not exist
-        return false;
       } else {
-        throw new Error("Unexpected status code: " + response.status);
+        throw new Error(response.statusText);
       }
     } catch (error) {
       console.error("An error occurred while checking email existence:", error);
       throw error;
     }
   }
+
+
+  // async checkEmailExists(email) {
+  //   const data = JSON.stringify({ email: email });
+  //   try {
+  //     const response = await fetch(BACKEND_URL + "/user/check-email", {
+  //       method: "post",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: data,
+  //     });
+
+  //     if (response.status === 200) {
+  //       // Email exists
+  //       const json = await response.json();
+  //       return json.exists;
+  //     } else if (response.status === 404) {
+  //       // Email does not exist
+  //       return false;
+  //     } else {
+  //       throw new Error("Unexpected status code: " + response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error("An error occurred while checking email existence:", error);
+  //     throw error;
+  //   }
+  // }
 
   async checkUsernameExists(username) {
     const data = JSON.stringify({ username: username });
