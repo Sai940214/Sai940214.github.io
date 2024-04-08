@@ -37,7 +37,7 @@ POST http://localhost:3001/user/check-email
 Content-Type: application/json
 
 {
-"email":"admin@123456"
+"email":"test18@gmail.com"
 }
 
 ### test email doesn't exsits 
