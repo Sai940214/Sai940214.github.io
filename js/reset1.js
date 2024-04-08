@@ -4,7 +4,7 @@ let user = new User();
 
 // Get DOM
 let email_input = document.querySelector("#email");
-let error = document.querySelector("#error");
+let errorMessage = document.querySelector("#error");
 let btn = document.querySelector(".btn.btn-dark");
 
 // Add keydown event listener to window
@@ -34,15 +34,24 @@ btn.addEventListener("click", async (event) => {
 
     if (exists) {
       // if exist, to reset2.html
-      error.style.display = "none";
+      errorMessage.style.display = "none";
       window.location.href = "../reset2.html";
-    } else {
-      // if not exist, display error info
-      error.style.display = "block";
-      error.textContent = "Email does not exist.";
     }
+    // else {
+    //   // if not exist, display error info
+    //   errorMessage.style.display = "block";
+    //   errorMessage.textContent = "Email does not exist.";
+    // }
   } catch (error) {
-    console.error("Error:", error);
+    let errorMessage = document.querySelector("#error");
+    if (error.message === "not found") {
+      // if not exist, display error info
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "Email does not exist.";
+    } else {
+      // 处理其他类型的错误
+      console.error("Error:", error);
+    }
   }
 });
 //22//
