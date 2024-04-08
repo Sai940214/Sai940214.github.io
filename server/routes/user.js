@@ -50,7 +50,7 @@ userRouter.post("/check-email", async (req, res) => {
         if (emailExistsResult.rowCount === 1) {
             res.status(200).json({ message: 'email has already existed in the database' });
         } else {
-            res.status(201).json({ error: 'email does not exist' });
+            res.status(404).json({ error: 'email does not exist' });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -68,7 +68,7 @@ userRouter.post("/check-username", async (req, res) => {
         if (usernameExistsResult.rowCount === 1) {
             res.status(200).json({ message: 'username has already existed in the database' });
         } else {
-            res.status(201).json({ error: 'username does not exist' });
+            res.status(404).json({ error: 'username does not exist' });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
