@@ -49,7 +49,6 @@ btn.addEventListener("click", async (event) => {
       errorMessage.style.display = "block";
       errorMessage.textContent = "Email does not exist.";
     } else {
-      // 处理其他类型的错误
       console.error("Error:", error);
     }
   }
