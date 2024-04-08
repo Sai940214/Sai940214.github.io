@@ -83,11 +83,15 @@ class User {
         body: data,
       });
 
-      if (response.ok === true) {
+      if (response.status === 200) {
+        // Email exists
         const json = await response.json();
         return json.exists;
+      } else if (response.status === 404) {
+        // Email does not exist
+        return false;
       } else {
-        throw new Error(response.statusText);
+        throw new Error("Unexpected status code: " + response.status);
       }
     } catch (error) {
       console.error("An error occurred while checking email existence:", error);

@@ -7,12 +7,12 @@ const password_input = document.querySelector("#password");
 const errorElement = document.querySelector("#error");
 
 // Add keydown event listener to window
-window.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.querySelector("#login-button").click(); // Trigger button click event
-  }
-});
+// window.addEventListener("keydown", function (event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     document.querySelector("#login-button").click(); // Trigger button click event
+//   }
+// });
 
 //login button event listener
 document.querySelector("#login-button").addEventListener("click", (event) => {
