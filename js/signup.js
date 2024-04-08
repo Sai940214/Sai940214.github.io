@@ -87,8 +87,7 @@ btn.addEventListener("click", async (event) => {
   } catch (error) {
     // Handle any errors
     console.error(error);
-    const errorMessage = document.getElementById("error");
-    errorMessage.style.display = "block";
-    errorMessage.textContent = "Something wrong.";
+    error.style.display = "block";
+    error.textContent = "Invalid username or email.";
   }
 });
