@@ -1,0 +1,64 @@
+### Get posts 
+GET http://localhost:3001
+
+### Login with valid credentials 
+POST http://localhost:3001/user/login 
+Content-Type: application/json
+
+{
+"username":"admin", 
+"password":"admin123"
+}
+
+### Login with invalid credentials 
+POST http://localhost:3001/user/login 
+Content-Type: application/json
+
+{
+"username":"admin", 
+"password":"wrongpassword"
+}
+
+
+# 6.Apr Modification:
+### Registration 
+POST http://localhost:3001/user/signup
+Content-Type: application/json
+
+{
+"username":"taisheng12",
+"email":"taisheng@gmail12",
+"password":"taisheng12345"
+}
+
+# 7.Apr Modification:
+### test email exsits
+POST http://localhost:3001/user/check-email
+Content-Type: application/json
+
+{
+"email":"admin@123456"
+}
+
+### test email doesn't exsits 
+POST http://localhost:3001/user/reset-password
+Content-Type: application/json
+
+{
+"email":"admin@456"
+}
+
+### test password has been changed
+POST http://localhost:3001/user/reset2
+Content-Type: application/json
+
+{
+"email":"admin@123456",
+"password":"passwordnewtest"
+}
+
+
+
+
+
+
