@@ -48,9 +48,9 @@ userRouter.post("/check-email", async (req, res) => {
         const emailExistsResult = await query(emailExistsSql, [email]);
 
         if (emailExistsResult.rowCount === 1) {
-            res.status(200).json({ message: 'email has already existed in the database' });
+            res.status(200).json({ exists: true });
         } else {
-            res.status(404).json({ error: 'email does not exist' });
+            res.status(404).json({ exists: false });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
