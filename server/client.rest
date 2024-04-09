@@ -48,6 +48,22 @@ Content-Type: application/json
 "email":"admin@456"
 }
 
+### test username exsits
+POST http://localhost:3001/user/check-username
+Content-Type: application/json
+
+{
+"username":"test18"
+}
+
+### test username doesn't exsits 
+POST http://localhost:3001/user/check-username
+Content-Type: application/json
+
+{
+"username":"admin@456"
+}
+
 ### test password has been changed
 POST http://localhost:3001/user/reset2
 Content-Type: application/json

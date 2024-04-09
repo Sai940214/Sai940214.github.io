@@ -137,7 +137,7 @@ class User {
         throw new Error(response.statusText);
       }
     } catch (error) {
-      console.error("An error occurred while checking email existence:", error);
+      console.error("An error occurred while checking username existence:", error);
       throw error;
     }
   }
