@@ -54,3 +54,7 @@
   align-items: center;
 }
 
+/* 加号旋转 45 度 */
+.plus-icon {
+  transform: rotate(90deg);
+}
