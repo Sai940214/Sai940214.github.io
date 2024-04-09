@@ -36,7 +36,14 @@ btn.addEventListener("click", async (event) => {
       // if exist, to reset2.html
       errorMessage.style.display = "none";
       window.location.href = "../reset2.html";
+      // store email to local
+      localStorage.setItem("email", email);
     }
+    // if (exists) {
+    //   // if exist, to reset2.html
+    //   errorMessage.style.display = "none";
+    //   window.location.href = "../reset2.html";
+    // }
     // else {
     //   // if not exist, display error info
     //   errorMessage.style.display = "block";
