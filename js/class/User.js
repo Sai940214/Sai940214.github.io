@@ -202,12 +202,18 @@ class User {
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a915113 (修复了newpost前后端链接不上的问题)
     // console.log(data.title)
     // console.log(data.content)
     // console.log(data.username)
 
+<<<<<<< HEAD
 =======
 >>>>>>> 9a0f7d8 (edit post function in User.js)
+=======
+>>>>>>> a915113 (修复了newpost前后端链接不上的问题)
     try {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
