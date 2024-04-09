@@ -70,17 +70,18 @@ Content-Type: application/json
 
 {
 "email":"test@gmail.com",
-"newPassword":"passwordnewtest"
+"newPassword":"12345678"
 }
 
 # 9.Apr modification:
 ### test add a new post
-POST http://localhost:3001/user/newpost
+POST http://localhost:3001/post/create
 Content-Type: application/json
 
 {
     "title": "this is a new post",
-    "content": "this is a new content"
+    "content": "this is a new content",
+    "username": "admin"
 }
 
 
