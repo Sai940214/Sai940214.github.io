@@ -1,8 +1,9 @@
 const express = require('express')
 const { query } = require('../helpers/db.js')
-const bcrypt = require('bcrypt');
+
 
 const userRouter = express.Router()
+
 
 userRouter.post("/login",async(req,res) => {
     try{
@@ -24,7 +25,6 @@ userRouter.post("/login",async(req,res) => {
                 res.status(500).json({error: error})}
         })
 
-// 6.Apr Modification:
 // added register code
 userRouter.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;
@@ -38,45 +38,8 @@ userRouter.post("/signup", async (req, res) => {
     }
 });
 
-// 7.Apr Modification:
-// check email address has existed in the database
-userRouter.post("/check-email", async (req, res) => {
-    try {
-        const email = req.body.email;
-        // Check if the email exists
-        const emailExistsSql = "SELECT * FROM users WHERE email = $1";
-        const emailExistsResult = await query(emailExistsSql, [email]);
-
-        if (emailExistsResult.rowCount === 1) {
-            res.status(200).json({ message: 'email has already existed in the database' });
-        } else {
-            res.status(201).json({ error: 'email does not exist' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// check username has existed in the database
-userRouter.post("/check-username", async (req, res) => {
-    try {
-        const username = req.body.username;
-        // Check if the username exists
-        const usernameExistsSql = "SELECT * FROM users WHERE username = $1";
-        const usernameExistsResult = await query(usernameExistsSql, [username]);
-
-        if (usernameExistsResult.rowCount === 1) {
-            res.status(200).json({ message: 'username has already existed in the database' });
-        } else {
-            res.status(201).json({ error: 'username does not exist' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
 // Request password reset
-userRouter.post("/reset-password", async (req, res) => {
+userRouter.post("/reset", async (req, res) => {
     try {
         const email = req.body.email;
         const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
@@ -94,7 +57,14 @@ userRouter.post("/reset-password", async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
+})
+
+
+          
+ 
+
+
+
 
 module.exports = {
     userRouter
