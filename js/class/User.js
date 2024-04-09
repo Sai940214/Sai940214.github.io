@@ -165,5 +165,32 @@ class User {
       throw error;
     }
   }
+
+  async newPost(title, content, username) {
+    const data = JSON.stringify({
+      title: title,
+      content: content,
+      username: username,
+    });
+
+    try {
+      const response = await fetch(BACKEND_URL + "/post/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data
+      });
+    
+      if (response.ok) {
+        const json = await response.json();
+        // 根据需要处理json
+        return json; // 可能包含帖子的信息或确认
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred during post creation:", error);
+      throw error;
+    }
+  }
 }
 export { User };
