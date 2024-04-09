@@ -21,7 +21,7 @@ document.querySelector("#login-button").addEventListener("click", (event) => {
   const password = password_input.value;
 
 //return to homepage if login is successful
-user.login(username, password).then(user => {
+user.login(username, password).then(userInfo => {
   window.location.href="home.html"
 }).catch(LoginError => {
   errorElement.style.display = "block";

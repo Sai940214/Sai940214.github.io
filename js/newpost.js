@@ -15,27 +15,37 @@ postButton.addEventListener("click", async (event) => {
   const title = title_input.value;
   const content = content_input.value;
 
+  // get user info from session
+  const userFromStorage = sessionStorage.getItem("user");
+
+  const userObject = JSON.parse(userFromStorage);
+  const username = userObject.username;
+
+  // for testing 
+  console.log(username)
+
+
+  // Check if title input is empty
+  if (!title) {
+    // If title input is empty, display an error message
+    error.style.display = "block";
+    error.textContent = "Please enter your username.";
+    return;
+  } else {
+    error.style.display = "none";
+  }
+
+  // Check if content input is empty
+  if (!content) {
+    // If content input is empty, display an error message
+    error.style.display = "block";
+    error.textContent = "Please enter your email address.";
+    return;
+  } else {
+    error.style.display = "none";
+  }
+
   try {
-    // Check if title input is empty
-    if (!title) {
-      // If title input is empty, display an error message
-      error.style.display = "block";
-      error.textContent = "Please enter your username.";
-      return;
-    } else {
-      error.style.display = "none";
-    }
-
-    // Check if content input is empty
-    if (!content) {
-      // If content input is empty, display an error message
-      error.style.display = "block";
-      error.textContent = "Please enter your email address.";
-      return;
-    } else {
-      error.style.display = "none";
-    }
-
     // Register post
     await user.newPost(title, content, username);
     // Redirect to login page
