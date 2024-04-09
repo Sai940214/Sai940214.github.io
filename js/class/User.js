@@ -21,23 +21,27 @@ class User {
   }
 
   get id() {
-    return this.#id;
+    return this.#id
   }
 
   get username() {
-    return this.#username;
+    return this.#username
   }
 
   get email() {
-    return this.#email;
+    return this.#email
   }
 
   get password() {
-    return this.#password;
+    return this.#password
   }
 
   get newPassword() {
-    return this.#newPassword;
+    return this.#newPassword
+  }
+
+  get isLoggedIn(){
+    return this.#username !== undefined ? true : false
   }
 
   //判断是否log
@@ -179,6 +183,7 @@ class User {
     }
   }
 
+<<<<<<< HEAD
   async newPost(formData) {
     try {
         const response = await fetch(BACKEND_URL + '/post/create', {
@@ -241,5 +246,14 @@ class User {
   //     throw error;
   //   }
   // }
+=======
+  logout() {
+    this.#username = undefined
+    sessionStorage.removeItem('user')
+  }
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
 }
+
+
+
 export { User };

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .font{
   font-family: "Schibsted Grotesk", sans-serif;
   font-optical-sizing: auto;
@@ -8,6 +9,13 @@
 body {
   background-color: #fffdfe;
 }
+=======
+body {
+  background-color: #FFFDFE;
+}
+
+
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
 .image {
   text-align: left;
 }
@@ -16,8 +24,13 @@ body {
   width: 100%;
 }
 
+<<<<<<< HEAD
 #logo {
   color: #ffb11b;
+=======
+#logo{
+  color: #FFB11B;
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
 }
 
 /*------navbar------*/
@@ -28,16 +41,27 @@ body {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
 }
 
+<<<<<<< HEAD
 .navbar-toggler {
   border: none;
 }
 
 .navbar-toggler:focus {
   outline: none;
+=======
+.navbar-toggler{
+  border: none;
+
+}
+
+.navbar-toggler:focus {
+  outline: none; 
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   box-shadow: none; /* 移除点击后的边框阴影 */
 }
 
 .navbar-toggler:hover {
+<<<<<<< HEAD
   background-color: #e2e1d6;
 }
 
@@ -68,6 +92,40 @@ svg path:first-of-type {
 
 svg {
   color: #ffb11b;
+=======
+  background-color: #e2e1d6; 
+}
+
+.navbar-toggler svg rect {
+  fill: #FFB11B; 
+}
+
+
+.btn-close:focus {
+  outline: none; 
+  box-shadow: none;
+}
+
+.btn-close:hover{
+  background-color: #e2e1d6; 
+}
+
+svg path:nth-of-type(2) {
+  fill: #FFB11B;
+}
+
+svg path:nth-of-type(3) {
+  fill: #FFB11B;
+}
+
+svg path:first-of-type {
+  fill: #FFB11B; 
+}
+
+
+svg{
+  color:#FFB11B
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
 }
 
 #profile-email {
@@ -80,11 +138,16 @@ svg {
   margin-left: -3px;
 }
 
+<<<<<<< HEAD
 #mypost {
+=======
+#mypost{
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   margin-top: 20px;
 }
 
 .nav-link:hover {
+<<<<<<< HEAD
   color: #ffb11b;
 }
 
@@ -92,6 +155,16 @@ hr {
   color: #ffb11b;
   margin-top: 3px;
   width: calc(100% - 50px);
+=======
+  color: #FFB11B
+}
+
+hr{
+  color: #FFB11B;;
+  margin-top: 3px;;
+  width: calc(100% - 50px); 
+
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
 }
 
 #logout-display {
@@ -99,6 +172,7 @@ hr {
   bottom: 30px;
 }
 
+<<<<<<< HEAD
 #mypost,
 #logout-display {
   display: flex;
@@ -161,6 +235,11 @@ hr {
 
 /*------post-card------*/
 /* .post-card {
+=======
+
+
+.post-card {
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   margin-bottom: 20px;
   cursor: pointer;
   border: 1px solid #ece7c0;
@@ -205,9 +284,25 @@ hr {
   margin-bottom: 10px;
 }
 
+<<<<<<< HEAD
 .author-info {
   /* 作者信息容器样式 */
   display: flex;
+=======
+.card-text {
+  font-size: 1rem;
+}
+
+.post-thumbnail {
+  width: 100px; 
+  height: auto; 
+  float: right;
+  margin-left: 15px;
+}
+
+.nav-item-flex{
+  display: inline-flex;
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   align-items: center;
   margin-top: 20px;
   margin-bottom: -8px;
