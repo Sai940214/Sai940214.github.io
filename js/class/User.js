@@ -19,6 +19,7 @@ class User {
 
   get id() {
     return this.#id
+    return this.#id
   }
 
   get username() {
@@ -208,9 +209,9 @@ class User {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: data,
+        body: data
       });
-
+    
       if (response.ok) {
         const json = await response.json();
         // 根据需要处理json
@@ -228,44 +229,6 @@ class User {
     this.#username = undefined
     sessionStorage.removeItem('user')
   }
-
-  async getPostsByUsername(username) {
-    const data = JSON.stringify({ username: username });
-    try {
-      const response = await fetch("/post/myPost");
-      if (!response.ok) {
-        throw new Error(`Failed to fetch posts for user ${username}`);
-      }
-      const data = await response.json();
-      return data.posts;
-    } catch (error) {
-      console.error(
-        `An error occurred during getting posts from ${username} :`,
-        error
-      );
-      throw error;
-    }
-  }
-
-  // async deletePost(title) {
-  //   const data = JSON.stringify({ title: title });
-  //   try {
-  //     const response = await fetch(BACKEND_URL + "/post/delete/" + postId, {
-  //       method: "DELETE",
-  //     });
-
-  //     if (response.ok) {
-  //       const json = await response.json();
-  //       // 根据需要处理json
-  //       return json; // 可能包含确认信息或其他数据
-  //     } else {
-  //       throw new Error(response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error("An error occurred during post deletion:", error);
-  //     throw error;
-  //   }
-  // }
 }
 
 
