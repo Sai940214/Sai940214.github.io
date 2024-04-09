@@ -36,6 +36,28 @@ btn.addEventListener("click", async (event) => {
       // if exist, to reset2.html
       error.style.display = "none";
       window.location.href = "../reset2.html";
+<<<<<<< HEAD
+=======
+      // store email to local
+      localStorage.setItem("email", email);
+    }
+    // if (exists) {
+    //   // if exist, to reset2.html
+    //   errorMessage.style.display = "none";
+    //   window.location.href = "../reset2.html";
+    // }
+    // else {
+    //   // if not exist, display error info
+    //   errorMessage.style.display = "block";
+    //   errorMessage.textContent = "Email does not exist.";
+    // }
+  } catch (error) {
+    let errorMessage = document.querySelector("#error");
+    if (error.message === "not found") {
+      // if not exist, display error info
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "Email does not exist.";
+>>>>>>> 5ebc0e2 (fix the problem: backend can't receive the email value from frontend.)
     } else {
       // if not exist, display error info
       error.style.display = "block";
