@@ -105,6 +105,7 @@ userRouter.post("/reset-password", async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 // Request password reset
 userRouter.post("/reset-password", async (req, res) => {
     try {
@@ -122,6 +123,8 @@ userRouter.post("/reset-password", async (req, res) => {
     }
 });
 
+=======
+>>>>>>> d80093b (修复了newpost前后端链接不上的问题)
 module.exports = {
     userRouter
   }
