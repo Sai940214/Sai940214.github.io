@@ -180,8 +180,25 @@ userRouter.post("/reset", async (req, res) => {
     try {
         const email = req.body.email;
         const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
-        // console.log(email)
-        // console.log(newPassword)
+        console.log(email)
+        console.log(newPassword)
+        const updatePasswordQuery = "UPDATE users SET password = $1 WHERE email = $2";
+        await query(updatePasswordQuery, [newPassword, email]);
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error("Error resetting password:", error)
+        res.status(500).json({ error: "An error occurred while resetting password." });
+    }
+});
+
+// Request password reset
+userRouter.post("/reset-password", async (req, res) => {
+    try {
+        const email = req.body.email;
+        const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
+        console.log(email)
+        console.log(newPassword)
         const updatePasswordQuery = "UPDATE users SET password = $1 WHERE email = $2";
         await query(updatePasswordQuery, [newPassword, email]);
 

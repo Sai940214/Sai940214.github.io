@@ -13,6 +13,7 @@ const { postRouter } = require("./routes/post.js");
 const express = require('express')
 const cors = require('cors')
 const { userRouter } = require('./routes/user.js')
+const { postRouter } = require('./routes/post.js')
 const { blogRouter } = require('./routes/post.js')
 const { postRouter } = require('./routes/post.js')
 >>>>>>> 5f09368 (user.js增加 server改变)
