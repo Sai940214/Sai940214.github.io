@@ -80,8 +80,8 @@ userRouter.post("/reset-password", async (req, res) => {
     try {
         const email = req.body.email;
         const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
-        console.log(email)
-        console.log(newPassword)
+        // console.log(email)
+        // console.log(newPassword)
         const updatePasswordQuery = "UPDATE users SET password = $1 WHERE email = $2";
         await query(updatePasswordQuery, [newPassword, email]);
 
