@@ -65,8 +65,8 @@ btn.addEventListener("click", (event) => {
 
   // Reset the password
   user
-    .reset(newPassword)
-    .then((user) => {
+    .reset(user.email, newPassword)
+    .then((newPassword) => {
       // If reset is successful, redirect to login page
       window.location.href = "../login.html";
     })
