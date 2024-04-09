@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const { userRouter } = require('./routes/user.js')
+const { postRouter } = require('./routes/post.js')
 const { blogRouter } = require('./routes/post.js')
 const { postRouter } = require('./routes/post.js')
 
