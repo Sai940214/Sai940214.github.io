@@ -201,10 +201,13 @@ class User {
       username: username,
     });
 
+<<<<<<< HEAD
     // console.log(data.title)
     // console.log(data.content)
     // console.log(data.username)
 
+=======
+>>>>>>> 9a0f7d8 (edit post function in User.js)
     try {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
