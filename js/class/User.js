@@ -18,23 +18,27 @@ class User {
   }
 
   get id() {
-    return this.#id;
+    return this.#id
   }
 
   get username() {
-    return this.#username;
+    return this.#username
   }
 
   get email() {
-    return this.#email;
+    return this.#email
   }
 
   get password() {
-    return this.#password;
+    return this.#password
   }
 
   get newPassword() {
-    return this.#newPassword;
+    return this.#newPassword
+  }
+
+  get isLoggedIn(){
+    return this.#username !== undefined ? true : false
   }
 
   async login(username, password) {
@@ -196,5 +200,13 @@ class User {
       throw error;
     }
   }
+
+  logout() {
+    this.#username = undefined
+    sessionStorage.removeItem('user')
+  }
 }
+
+
+
 export { User };
