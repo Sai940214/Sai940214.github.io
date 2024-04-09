@@ -7,12 +7,13 @@ const postRouter = express.Router()
 // added register code
 postRouter.post("/create", async (req, res) => {
     const { title, content, username } = req.body;
+     // for testing
+     console.log(username)
+     console.log(title)
+     console.log(content)
 
     try {
-         // for testing
-        //  console.log(username)
-        //  console.log(title)
-        //  console.log(content)
+        
          
         const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
         if (userResult.rows.length === 0) {
