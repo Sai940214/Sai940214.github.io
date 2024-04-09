@@ -49,7 +49,7 @@ class User {
       this.#id = json.id;
       this.#username = json.username;
       sessionStorage.setItem("user", JSON.stringify(json));
-      return this;
+      return { username: json.username, id: json.id };
     } else {
       throw response.statusText;
     }
