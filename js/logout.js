@@ -1,8 +1,8 @@
-//import { User } from "./class/User.js"
+import { User } from "./class/User.js"
 
-//const user = new User()
+const user = new User()
 
-//user.logout();
+user.logout();
 
 setTimeout(() => {
     //user.logout().then(() => {
