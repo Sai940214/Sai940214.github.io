@@ -65,12 +65,12 @@ Content-Type: application/json
 }
 
 ### test password has been changed
-POST http://localhost:3001/user/reset2
+POST http://localhost:3001/user/reset-password
 Content-Type: application/json
 
 {
-"email":"admin@123456",
-"password":"passwordnewtest"
+"email":"test@gmail.com",
+"newPassword":"passwordnewtest"
 }
 
 
