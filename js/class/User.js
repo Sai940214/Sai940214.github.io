@@ -167,6 +167,7 @@ class User {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   async newPost(title, content, username) {
     const data = JSON.stringify({
       title: title,
@@ -201,6 +202,11 @@ class User {
     this.#username = undefined
     sessionStorage.removeItem('user')
 >>>>>>> 9f55737 (navbar颜色样式更改&侧边栏完成&logout功能完成&新增空文件mypost,newpost)
+=======
+  logout() {
+    this.#username = undefined
+    sessionStorage.removeItem('user')
+>>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   }
 }
 
