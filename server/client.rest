@@ -96,10 +96,14 @@ POST http://localhost:3001/post/create
 Content-Type: application/json
 
 {
-    "title": "this is a new post",
-    "content": "this is a new content",
-    "username": "admin"
+"email":"admin@123456",
+"password":"passwordnewtest"
+>>>>>>> c335c4e (change the registration information)
 }
+
+
+
+
 
 
 
