@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
 "username":"admin", 
-"password":"admin123"
+"password":"12345678"
 }
 
 ### Login with invalid credentials 
