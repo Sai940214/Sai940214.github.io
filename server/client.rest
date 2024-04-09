@@ -1,5 +1,5 @@
 ### Get posts 
-GET http://localhost:3001
+GET http://localhost:3001/
 
 ### Login with valid credentials 
 POST http://localhost:3001/user/login 
@@ -19,6 +19,23 @@ Content-Type: application/json
 "password":"wrongpassword"
 }
 
+### test passwordreset email exsits 
+POST http://localhost:3001/user/reset
+Content-Type: application/json
+
+{
+"email":"admin@123456",
+"newPassword":"newpassword"
+}
+
+### test passwordreset email dosent exsits 
+POST http://localhost:3001/user/reset
+Content-Type: application/json
+
+{
+"email":"admin@456",
+"newPassword":"wrongpassword"
+}
 
 # 6.Apr Modification:
 ### Registration 
@@ -26,6 +43,7 @@ POST http://localhost:3001/user/signup
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
 "username":"test16",
 "email":"test16@gmail.com",
 "password":"password"
@@ -70,11 +88,29 @@ Content-Type: application/json
     "title": "this is a new post",
     "content": "this is a new content",
     "username": "admin"
+<<<<<<< HEAD
 >>>>>>> 58d1979 (add the backend code for create the new post and create a new code file in server folder called post.js)
+=======
+=======
+"username":"taisheng1",
+"email":"taisheng@gmail1",
+"password":"taisheng1234"
+>>>>>>> cf04460 (user.js增加 server改变)
+>>>>>>> 31ad1d1 (user.js增加 server改变)
 }
 
 
 
 
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> cf04460 (user.js增加 server改变)
+>>>>>>> 31ad1d1 (user.js增加 server改变)
