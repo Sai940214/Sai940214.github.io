@@ -80,19 +80,14 @@ userRouter.post("/reset-password", async (req, res) => {
     try {
         const email = req.body.email;
         const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
-        // Check if the email exists
-        const userExistsSql = "SELECT * FROM users WHERE email = $1";
-        const userExistsResult = await query(userExistsSql, [email]);
 
-        if (userExistsResult.rowCount === 1) {
-            const updatePasswordQuery = "UPDATE users SET password = $1 WHERE email = $2";
-            await query(updatePasswordQuery, [newPassword, email]);
-            res.status(200).json({ message: 'Password updated successfully' });
-        } else {
-            res.status(404).json({ error: 'User with this email not found' });
-        }
+        const updatePasswordQuery = "UPDATE users SET password = $1 WHERE email = $2";
+        await query(updatePasswordQuery, [newPassword, email]);
+
+        res.status(200).json({ success: true });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error resetting password:", error)
+        res.status(500).json({ error: "An error occurred while resetting password." });
     }
 });
 
