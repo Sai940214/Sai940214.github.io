@@ -1,8 +1,9 @@
 const express = require('express')
 const { query } = require('../helpers/db.js')
-const bcrypt = require('bcrypt');
+
 
 const userRouter = express.Router()
+
 
 userRouter.post("/login",async(req,res) => {
     try{
@@ -24,7 +25,6 @@ userRouter.post("/login",async(req,res) => {
                 res.status(500).json({error: error})}
         })
 
-// 6.Apr Modification:
 // added register code
 userRouter.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;
@@ -76,7 +76,7 @@ userRouter.post("/check-username", async (req, res) => {
 });
 
 // Request password reset
-userRouter.post("/reset-password", async (req, res) => {
+userRouter.post("/reset", async (req, res) => {
     try {
         const email = req.body.email;
         const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
@@ -90,7 +90,14 @@ userRouter.post("/reset-password", async (req, res) => {
         console.error("Error resetting password:", error)
         res.status(500).json({ error: "An error occurred while resetting password." });
     }
-});
+})
+
+
+          
+ 
+
+
+
 
 module.exports = {
     userRouter

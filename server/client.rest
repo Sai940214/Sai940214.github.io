@@ -1,5 +1,5 @@
 ### Get posts 
-GET http://localhost:3001
+GET http://localhost:3001/
 
 ### Login with valid credentials 
 POST http://localhost:3001/user/login 
@@ -19,6 +19,23 @@ Content-Type: application/json
 "password":"wrongpassword"
 }
 
+### test passwordreset email exsits 
+POST http://localhost:3001/user/reset
+Content-Type: application/json
+
+{
+"email":"admin@123456",
+"newPassword":"newpassword"
+}
+
+### test passwordreset email dosent exsits 
+POST http://localhost:3001/user/reset
+Content-Type: application/json
+
+{
+"email":"admin@456",
+"newPassword":"wrongpassword"
+}
 
 # 6.Apr Modification:
 ### Registration 
