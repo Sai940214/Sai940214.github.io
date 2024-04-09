@@ -28,20 +28,20 @@ btn.addEventListener("click", async (event) => {
 
   try {
     // Check if email exists
-    // const emailExists = await user.checkEmailExists(email);
-    // if (emailExists) {
-    //   error.style.display = "block";
-    //   error.textContent = "Email already exists.";
-    //   return;
-    // }
+    const emailExists = await user.checkEmailExists(email);
+    if (emailExists) {
+      error.style.display = "block";
+      error.textContent = "Email already exists.";
+      return;
+    }
 
     // Check if username exists
-    // const usernameExists = await user.checkUsernameExists(username);
-    // if (usernameExists) {
-    //   error.style.display = "block";
-    //   error.textContent = "Username already exists.";
-    //   return;
-    // }
+    const usernameExists = await user.checkUsernameExists(username);
+    if (usernameExists) {
+      error.style.display = "block";
+      error.textContent = "Username already exists.";
+      return;
+    }
 
     // Check if username input is empty
     if (!username) {
@@ -89,6 +89,6 @@ btn.addEventListener("click", async (event) => {
     console.error(error);
     const errorMessage = document.getElementById("error");
     errorMessage.style.display = "block";
-    errorMessage.textContent = "Invalid username or email.";
+    errorMessage.textContent = "Something wrong.";
   }
 });
