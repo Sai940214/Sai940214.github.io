@@ -99,7 +99,6 @@ class User {
     }
   }
 
-
   // async checkEmailExists(email) {
   //   const data = JSON.stringify({ email: email });
   //   try {
@@ -146,8 +145,8 @@ class User {
     }
   }
 
-  async reset(newPassword) {
-    const data = JSON.stringify({ newPassword: newPassword });
+  async reset(email, newPassword) {
+    const data = JSON.stringify({ email: email, newPassword: newPassword });
     try {
       const response = await fetch(BACKEND_URL + "/user/reset-password", {
         method: "post",
