@@ -10,9 +10,9 @@ postRouter.post("/create", async (req, res) => {
 
     try {
          // for testing
-         console.log(username)
-         console.log(title)
-         console.log(content)
+        //  console.log(username)
+        //  console.log(title)
+        //  console.log(content)
          
         const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
         if (userResult.rows.length === 0) {
