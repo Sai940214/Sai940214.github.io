@@ -66,4 +66,15 @@ function handleScroll() {
 window.addEventListener("scroll", handleScroll);
 loadMorePosts(); // 初始加载
 
+// 确保DOM完全加载后再添加事件监听器
+document.addEventListener('DOMContentLoaded', (event) => {
+  // 查询加号按钮
+  const plusButton = document.querySelector('.navbar-toggler.mu-auto');
+
+  // 为加号按钮添加点击事件监听器
+  plusButton.addEventListener('click', function() {
+    // 当加号按钮被点击时，跳转到 newpost.html
+    window.location.href = 'newpost.html';
+  });
+});
 
