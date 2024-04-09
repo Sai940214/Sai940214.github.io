@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 .DS_Store
 /node_modules
+=======
+.DS_Store
+>>>>>>> f4cdf9a (add the backend code for create the new post and create a new code file in server folder called post.js)
