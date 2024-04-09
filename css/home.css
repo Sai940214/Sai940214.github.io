@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   background-color: #FFFDFE;
 }
@@ -16,6 +17,11 @@ body {
 }
 
 /*------navbar------*/
+=======
+.image {
+  text-align: left;
+}
+>>>>>>> 1587d04 (sidebar完成&navbar颜色样式修改&logout功能完成)
 .nav-bottom {
   margin-top: 90%;
 }
@@ -23,6 +29,7 @@ body {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
 }
 
+<<<<<<< HEAD
 .navbar-toggler{
   border: none;
 
@@ -96,6 +103,10 @@ hr{
 #logout-display {
   position: fixed;
   bottom: 30px;
+=======
+.carousel {
+  width: 100%;
+>>>>>>> 1587d04 (sidebar完成&navbar颜色样式修改&logout功能完成)
 }
 
 
@@ -131,8 +142,13 @@ hr{
 }
 
 .post-thumbnail {
+<<<<<<< HEAD
   width: 100px; 
   height: auto; 
+=======
+  width: 100px; /* 缩略图宽度 */
+  height: auto; /* 自适应高度 */
+>>>>>>> 1587d04 (sidebar完成&navbar颜色样式修改&logout功能完成)
   float: right;
   margin-left: 15px;
 }
