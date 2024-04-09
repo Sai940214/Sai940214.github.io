@@ -9,6 +9,11 @@ postRouter.post("/create", async (req, res) => {
     const { title, content, username } = req.body;
 
     try {
+         // for testing
+         console.log(username)
+         console.log(title)
+         console.log(content)
+         
         const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
         if (userResult.rows.length === 0) {
             return res.status(404).json({ error: "User not found" });
