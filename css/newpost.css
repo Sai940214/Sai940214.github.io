@@ -1,0 +1,61 @@
+/* 在你的 /css/newpost.css 文件中添加这些规则 */
+
+/* 确保 navbar 固定在顶部 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* 高 z-index 确保 navbar 在其他内容上方 */
+}
+
+/* 旋转动画 */
+.plus-icon {
+    transition: transform 0.2s ease-in-out; /* 动画过渡效果 */
+  }
+  
+  .plus-icon.rotate {
+    transform: rotate(45deg); /* 旋转45度 */
+  }
+  
+/* 为 body 设置足够的上边距，以防止内容被遮挡 */
+body {
+    padding-top: 70px; /* 根据实际的 navbar 高度调整这个值 */
+}
+
+/* 调整发帖表单的样式，确保它居中并有足够的间距 */
+#postForm {
+    margin-top: 20px; /* 这个值根据需要进行调整 */
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%; /* 或者根据设计稿的宽度来设置 */
+}
+
+/* 发帖输入框的样式 */
+#titleInput, #contentInput {
+    width: 100%;
+    margin-bottom: 20px; /* 为输入框之间添加间距 */
+}
+
+/* 发布按钮的样式 */
+#postButton {
+    width: 100%;
+
+    border: 0px;
+    background-color: #333; 
+    border: none;
+    color: white;
+    width: 100%;
+    max-width: 312px;
+    height: 48px;
+    border-radius: 90px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+#postButton:hover {
+  background-color: #FFB11B; 
+  color: white; 
+}
