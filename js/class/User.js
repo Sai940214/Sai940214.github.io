@@ -180,6 +180,10 @@ class User {
       username: username,
     });
 
+    // console.log(data.title)
+    // console.log(data.content)
+    // console.log(data.username)
+
     try {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
