@@ -51,15 +51,14 @@ class User {
     sessionStorage.removeItem("user");
   }
 
-
   //判断是否log
-  get isLoggedIn(){
-    return this.#username !== undefined ? true : false
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
   }
 
   logout() {
-    this.#username = undefined
-    sessionStorage.removeItem('user')
+    this.#username = undefined;
+    sessionStorage.removeItem("user");
   }
 
   async login(username, password) {
@@ -110,18 +109,12 @@ class User {
 
       if (response.status === 200) {
         // Email exists
-      if (response.status === 200) {
-        // Email exists
         const json = await response.json();
         return json.exists;
       } else if (response.status === 404) {
         // Email does not exist
         return false;
-      } else if (response.status === 404) {
-        // Email does not exist
-        return false;
       } else {
-        throw new Error("Unexpected status code: " + response.status);
         throw new Error("Unexpected status code: " + response.status);
       }
     } catch (error) {
@@ -181,8 +174,6 @@ class User {
 
   async reset(email, newPassword) {
     const data = JSON.stringify({ email: email, newPassword: newPassword });
-  async reset(email, newPassword) {
-    const data = JSON.stringify({ email: email, newPassword: newPassword });
     try {
       const response = await fetch(BACKEND_URL + "/user/reset-password", {
         method: "post",
@@ -217,9 +208,9 @@ class User {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: data
+        body: data,
       });
-    
+
       if (response.ok) {
         const json = await response.json();
         // 根据需要处理json
