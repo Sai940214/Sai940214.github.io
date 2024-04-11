@@ -2,18 +2,31 @@ const express = require('express')
 const { query } = require('../helpers/db.js')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f1536be (0411 modified by this version)
 const postRouter = express.Router()
 
 // 9.Apr Modification:
 // added register code
 postRouter.post("/create", async (req, res) => {
     const { title, content, username } = req.body;
+<<<<<<< HEAD
 
     try {
          // for testing
         //  console.log(username)
         //  console.log(title)
         //  console.log(content)
+=======
+     // for testing
+     console.log(username)
+     console.log(title)
+     console.log(content)
+
+    try {
+        
+>>>>>>> f1536be (0411 modified by this version)
          
         const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
         if (userResult.rows.length === 0) {
@@ -33,6 +46,7 @@ postRouter.post("/create", async (req, res) => {
 
 module.exports = {
     postRouter
+<<<<<<< HEAD
 =======
 const blogRouter = express.Router()
 
@@ -51,4 +65,6 @@ blogRouter.get("/",async (req,res) => {
 module.exports = {
     blogRouter
 >>>>>>> cf04460 (user.js增加 server改变)
+=======
+>>>>>>> f1536be (0411 modified by this version)
   }
