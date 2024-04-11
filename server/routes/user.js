@@ -8,12 +8,24 @@ userRouter.post("/login", async (req, res) => {
     const sql = "select * from users where username=$1";
     const result = await query(sql, [req.body.username]);
     if (result.rowCount === 1) {
-      if (result.rows[0].password === req.body.password) {
-        res.status(200).json(result.rows[0]);
-      } else {
-        res.statusMessage = "Invalidnlogin";
-        res.status(401).json({ error: "Invalid login" });
-      }
+      bcrypt.compare(
+        req.body.password,
+        result.rows[0].password,
+        (err, bcrypt_res) => {
+          if (!err) {
+            if (bcrypt_res === true) {
+              const user = result.rows[0];
+              res.status(200).json({ id: user.id, username: user.username });
+            } else {
+              res.statusMessage = "Invalid login";
+              res.status(401).json({ error: "Invalid login" });
+            }
+          } else {
+            res.statusMessage = err;
+            res.status(500).json({ error: err });
+          }
+        }
+      );
     } else {
       res.statusMessage = "Invalid login";
       res.status(401).json({ error: "Invalid login" });
@@ -24,18 +36,29 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+// 6.Apr Modification:
 // added register code
 userRouter.post("/signup", async (req, res) => {
-  const { username, email, password } = req.body;
-  try {
-    const sql =
-      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) returning user_id";
-    const result = await query(sql, [username, email, password]);
-    res.status(200).json({ user_id: result.rows[0].user_id });
-  } catch (error) {
-    res.statusMessage = error;
-    res.status(500).json({ error: error });
-  }
+  bcrypt.hash(req.body.password, 10, async (err, hash) => {
+    if (!err) {
+      try {
+        const sql =
+          "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) returning user_id";
+        const result = await query(sql, [
+          req.body.username,
+          req.body.email,
+          hash,
+        ]);
+        res.status(200).json({ user_id: result.rows[0].user_id });
+      } catch (error) {
+        res.statusMessage = error;
+        res.status(500).json({ error: error });
+      }
+    } else {
+      res.statusMessage = err;
+      res.status(500).json({ error: err });
+    }
+  });
 });
 
 // 7.Apr Modification:
@@ -76,12 +99,12 @@ userRouter.post("/check-username", async (req, res) => {
 });
 
 // Request password reset
-userRouter.post("/reset", async (req, res) => {
+userRouter.post("/reset-password", async (req, res) => {
   try {
     const email = req.body.email;
     const newPassword = req.body.newPassword; // Assuming newPassword is provided in the request body
-    // console.log(email)
-    // console.log(newPassword)
+    console.log(email);
+    console.log(newPassword);
     const updatePasswordQuery =
       "UPDATE users SET password = $1 WHERE email = $2";
     await query(updatePasswordQuery, [newPassword, email]);

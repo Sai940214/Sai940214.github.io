@@ -1,7 +1,6 @@
 body {
-  background-color: #FFFDFE;
+  background-color: #fffdfe;
 }
-
 
 .image {
   text-align: left;
@@ -11,8 +10,8 @@ body {
   width: 100%;
 }
 
-#logo{
-  color: #FFB11B;
+#logo {
+  color: #ffb11b;
 }
 
 /*------navbar------*/
@@ -23,49 +22,46 @@ body {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
 }
 
-.navbar-toggler{
+.navbar-toggler {
   border: none;
-
 }
 
 .navbar-toggler:focus {
-  outline: none; 
+  outline: none;
   box-shadow: none; /* 移除点击后的边框阴影 */
 }
 
 .navbar-toggler:hover {
-  background-color: #e2e1d6; 
+  background-color: #e2e1d6;
 }
 
 .navbar-toggler svg rect {
-  fill: #FFB11B; 
+  fill: #ffb11b;
 }
 
-
 .btn-close:focus {
-  outline: none; 
+  outline: none;
   box-shadow: none;
 }
 
-.btn-close:hover{
-  background-color: #e2e1d6; 
+.btn-close:hover {
+  background-color: #e2e1d6;
 }
 
 svg path:nth-of-type(2) {
-  fill: #FFB11B;
+  fill: #ffb11b;
 }
 
 svg path:nth-of-type(3) {
-  fill: #FFB11B;
+  fill: #ffb11b;
 }
 
 svg path:first-of-type {
-  fill: #FFB11B; 
+  fill: #ffb11b;
 }
 
-
-svg{
-  color:#FFB11B
+svg {
+  color: #ffb11b;
 }
 
 #profile-email {
@@ -78,27 +74,24 @@ svg{
   margin-left: -3px;
 }
 
-#mypost{
+#mypost {
   margin-top: 20px;
 }
 
 .nav-link:hover {
-  color: #FFB11B
+  color: #ffb11b;
 }
 
-hr{
-  color: #FFB11B;;
-  margin-top: 3px;;
-  width: calc(100% - 50px); 
-
+hr {
+  color: #ffb11b;
+  margin-top: 3px;
+  width: calc(100% - 50px);
 }
 
 #logout-display {
   position: fixed;
   bottom: 30px;
 }
-
-
 
 .post-card {
   margin-bottom: 20px;
@@ -109,7 +102,7 @@ hr{
   background-color: #f8f9fa;
   transition: box-shadow 0.3s ease-in-out;
   width: 100%; /* 使用相对单位，使卡片宽度自适应屏幕大小 */
-  max-width: auto; 
+  max-width: auto;
   height: auto; /* 自适应高度 */
   top: auto; /* 移除固定的定位属性 */
   left: auto; /* 移除固定的定位属性 */
@@ -118,7 +111,7 @@ hr{
 }
 
 .post-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
@@ -131,13 +124,13 @@ hr{
 }
 
 .post-thumbnail {
-  width: 100px; 
-  height: auto; 
+  width: 100px;
+  height: auto;
   float: right;
   margin-left: 15px;
 }
 
-.nav-item-flex{
+.nav-item-flex {
   display: inline-flex;
   align-items: center;
 }
