@@ -37,15 +37,31 @@ class User {
     return this.#newPassword;
   }
 
+<<<<<<< HEAD
+=======
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
+  }
 
   //判断是否log
-  get isLoggedIn(){
-    return this.#username !== undefined ? true : false
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
   }
 
   logout() {
-    this.#username = undefined
-    sessionStorage.removeItem('user')
+    this.#username = undefined;
+    sessionStorage.removeItem("user");
+  }
+>>>>>>> c7d52f3 (删减merge过程中的重复代码)
+
+  //判断是否log
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
+  }
+
+  logout() {
+    this.#username = undefined;
+    sessionStorage.removeItem("user");
   }
 
   async login(username, password) {
@@ -192,9 +208,9 @@ class User {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: data
+        body: data,
       });
-    
+
       if (response.ok) {
         const json = await response.json();
         // 根据需要处理json
