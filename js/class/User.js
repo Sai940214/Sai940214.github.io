@@ -37,6 +37,10 @@ class User {
     return this.#newPassword;
   }
 
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
+  }
+
   async login(username, password) {
     const data = JSON.stringify({ username: username, password: password });
     const response = await fetch(BACKEND_URL + "/user/login", {
@@ -140,7 +144,10 @@ class User {
         throw new Error(response.statusText);
       }
     } catch (error) {
-      console.error("An error occurred while checking username existence:", error);
+      console.error(
+        "An error occurred while checking username existence:",
+        error
+      );
       throw error;
     }
   }
@@ -181,9 +188,9 @@ class User {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: data
+        body: data,
       });
-    
+
       if (response.ok) {
         const json = await response.json();
         // 根据需要处理json
