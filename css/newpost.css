@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 /* CSS for the parent container of the button */
 .parent-container {
     display: flex;
     justify-content: center; /* This centers the button horizontally */
+=======
+.parent-container {
+    display: flex;
+    justify-content: center; 
+>>>>>>> f1536be (0411 modified by this version)
   }
   
 /* 确保 navbar 固定在顶部 */
@@ -10,6 +16,24 @@
     top: 0;
     width: 100%;
     z-index: 1000; /* 高 z-index 确保 navbar 在其他内容上方 */
+<<<<<<< HEAD
+=======
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-brand {
+    width: 90%;
+    text-align: center;
+  }
+
+  .navbar-toggler.me-auto {
+    background-color: transparent; /* 无背景色 */
+    border: none; /* 无边框 */
+    pointer-events: none; /* 禁止点击 */
+    opacity: 0.5; /* 降低透明度，使其看起来像是禁用的 */
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 /* 旋转 */
@@ -28,6 +52,10 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 80%; /* 或者根据设计稿的宽度来设置 */
+<<<<<<< HEAD
+=======
+    color: #FAF9F0;
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 /* 发帖输入框的样式 */
@@ -36,19 +64,29 @@ body {
     border-bottom: 1px solid #777E90; /* 灰色分割线 */
     margin-bottom: 20px; /* 分割线和文本区域之间的间隔 */
     width: 100%; /* 完整宽度 */
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 /* 文本区域的样式 */
 #contentInput {
     border: none;
     width: 100%; /* 完整宽度 */
+<<<<<<< HEAD
     min-height: 150px; /* 设置最小高度 */
+=======
+    min-height: 600px; /* 设置最小高度 */
+
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 #titleInput:focus, #contentInput:focus {
     outline: none;
 }
 
+<<<<<<< HEAD
 /* Updated CSS for postButton */
 
 #postButton {
@@ -67,6 +105,29 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 10; /* 确保按钮在其他内容之上 */
+=======
+#postButton {
+    position: fixed; /* 固定位置 */
+    bottom: 0; /* 在底部 */
+    z-index: 10; /* 确保按钮在其他内容之上 */
+    left: 50%;
+    transform: translateX(-50%); /* 这会将按钮居中于屏幕底部 */
+    font-size: 15px;
+    background-color: #333;
+    color: white;
+    border: 0px;
+    min-width: 312px;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 90px;
+    margin-bottom: 12px;
+    display: flex;        
+    align-items: center;  
+    justify-content: center;  
+    text-align: center;  
+    padding: 0;        
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 
@@ -74,3 +135,28 @@ body {
     background-color: #FFB11B;
     color: white;
 }
+<<<<<<< HEAD
+=======
+
+/* 报错信息 */
+#postForm {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  #titleInput, #contentInput {
+    width: 100%; /* 让输入框占满宽度 */
+  }
+  
+  #postButton {
+    width: auto; /* 设置按钮的初始宽度 */
+    padding: 10px 20px; /* 给按钮增加一些内间距 */
+  }
+  
+  .alert {
+    text-align: center; /* 居中文本 */
+    border-radius: 5px; /* 轻微圆角 */
+    margin-top: 20px; /* 在消息和其他表单元素之间添加一些间隙 */
+  }
+  
+>>>>>>> f1536be (0411 modified by this version)
