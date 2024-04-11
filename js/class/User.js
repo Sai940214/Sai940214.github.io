@@ -14,6 +14,7 @@ class User {
       this.#id = userObject.id;
       this.#username = userObject.username;
       this.#email = userObject.email;
+<<<<<<< HEAD
       console.log("Loaded user id: ", this.#id); // 调试信息
   } else {
       console.log("No user in sessionStorage"); // 调试信息
@@ -40,10 +41,38 @@ class User {
     return this.#newPassword
   }
 
+=======
+    }
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get username() {
+    return this.#username;
+  }
+
+  get email() {
+    return this.#email;
+  }
+
+  get password() {
+    return this.#password;
+  }
+
+  get newPassword() {
+    return this.#newPassword;
+  }
+
+
+  //判断是否log
+>>>>>>> f1536be (0411 modified by this version)
   get isLoggedIn(){
     return this.#username !== undefined ? true : false
   }
 
+<<<<<<< HEAD
   //判断是否log
   get isLoggedIn() {
     return this.#username !== undefined ? true : false;
@@ -52,6 +81,11 @@ class User {
   logout() {
     this.#username = undefined;
     sessionStorage.removeItem("user");
+=======
+  logout() {
+    this.#username = undefined
+    sessionStorage.removeItem('user')
+>>>>>>> f1536be (0411 modified by this version)
   }
 
   async login(username, password) {
@@ -65,9 +99,14 @@ class User {
       const json = await response.json();
       this.#id = json.id;
       this.#username = json.username;
+<<<<<<< HEAD
       this.#email = json.email;
       sessionStorage.setItem("user", JSON.stringify(json));
       return { username: json.username, id: json.id };
+=======
+      sessionStorage.setItem("user", JSON.stringify(json));
+      return this;
+>>>>>>> f1536be (0411 modified by this version)
     } else {
       throw response.statusText;
     }
@@ -101,11 +140,23 @@ class User {
         body: data,
       });
 
+<<<<<<< HEAD
       if (response.ok === true) {
         const json = await response.json();
         return json.exists;
       } else {
         return false;
+=======
+      if (response.status === 200) {
+        // Email exists
+        const json = await response.json();
+        return json.exists;
+      } else if (response.status === 404) {
+        // Email does not exist
+        return false;
+      } else {
+        throw new Error("Unexpected status code: " + response.status);
+>>>>>>> f1536be (0411 modified by this version)
       }
     } catch (error) {
       console.error("An error occurred while checking email existence:", error);
@@ -154,10 +205,14 @@ class User {
         throw new Error(response.statusText);
       }
     } catch (error) {
+<<<<<<< HEAD
       console.error(
         "An error occurred while checking username existence:",
         error
       );
+=======
+      console.error("An error occurred while checking username existence:", error);
+>>>>>>> f1536be (0411 modified by this version)
       throw error;
     }
   }
@@ -183,6 +238,7 @@ class User {
     }
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   async newPost(formData) {
     try {
@@ -256,4 +312,37 @@ class User {
 
 
 
+=======
+  async newPost(title, content, username) {
+    const data = JSON.stringify({
+      title: title,
+      content: content,
+      username: username,
+    });
+
+    // console.log(data.title)
+    // console.log(data.content)
+    // console.log(data.username)
+
+    try {
+      const response = await fetch(BACKEND_URL + "/post/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: data
+      });
+    
+      if (response.ok) {
+        const json = await response.json();
+        // 根据需要处理json
+        return json; // 可能包含帖子的信息或确认
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred during post creation:", error);
+      throw error;
+    }
+  }
+}
+>>>>>>> f1536be (0411 modified by this version)
 export { User };

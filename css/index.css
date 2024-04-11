@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .font{
   font-family: "Schibsted Grotesk", sans-serif;
   font-optical-sizing: auto;
@@ -5,6 +6,8 @@
   font-style: normal;
   font-size:medium;
 }
+=======
+>>>>>>> f1536be (0411 modified by this version)
 * {
   margin: 0;
   padding: 0;
@@ -13,13 +16,20 @@
 
 body, html {
   height: 100%;
+<<<<<<< HEAD
   backdrop-filter: blur(10px); 
   margin: 0;
+=======
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 .container-fluid {
   display: flex;
+<<<<<<< HEAD
   flex-direction: center;
+=======
+  flex-direction: column;
+>>>>>>> f1536be (0411 modified by this version)
   justify-content: center;
   align-items: center;
   min-height: 100vh;

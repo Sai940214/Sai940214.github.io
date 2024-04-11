@@ -3,8 +3,11 @@ import { User } from "./class/User.js";
 let user = new User();
 
 // Get DOM
+<<<<<<< HEAD
 // get email from local
 const emailFromReset1 = localStorage.getItem("email");
+=======
+>>>>>>> f1536be (0411 modified by this version)
 let newPassword_input = document.querySelector("#newPassword");
 let confirmPassword_input = document.querySelector("#confirmPassword");
 let error = document.querySelector("#error");
@@ -66,6 +69,7 @@ btn.addEventListener("click", (event) => {
   }
 
   // Reset the password
+<<<<<<< HEAD
   // user
   //   .reset(user.email, newPassword)
   //   .then((newPassword) => {
@@ -78,6 +82,10 @@ btn.addEventListener("click", (event) => {
   //   });
   user
     .reset(emailFromReset1, newPassword)
+=======
+  user
+    .reset(user.email, newPassword)
+>>>>>>> f1536be (0411 modified by this version)
     .then((newPassword) => {
       // If reset is successful, redirect to login page
       window.location.href = "../login.html";

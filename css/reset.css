@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .font{
   font-family: "Schibsted Grotesk", sans-serif;
   font-optical-sizing: auto;
@@ -5,6 +6,8 @@
   font-style: normal;
   font-size:medium;
 }
+=======
+>>>>>>> f1536be (0411 modified by this version)
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +21,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+<<<<<<< HEAD
   margin: 0;
+=======
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 .box {
@@ -147,7 +153,10 @@ color: white;
       padding: 1rem;
       background-color: rgba(255, 255, 255, 0.2); 
       backdrop-filter: blur(4px);
+<<<<<<< HEAD
       min-height: 100vh;
+=======
+>>>>>>> f1536be (0411 modified by this version)
     }
   
   .login-card {

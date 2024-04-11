@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .font{
   font-family: "Schibsted Grotesk", sans-serif;
   font-optical-sizing: auto;
@@ -10,12 +11,17 @@ body {
   background-color: #fffdfe;
 }
 =======
+=======
+>>>>>>> f1536be (0411 modified by this version)
 body {
   background-color: #FFFDFE;
 }
 
 
+<<<<<<< HEAD
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+>>>>>>> f1536be (0411 modified by this version)
 .image {
   text-align: left;
 }
@@ -25,12 +31,17 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #logo {
   color: #ffb11b;
 =======
 #logo{
   color: #FFB11B;
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+#logo{
+  color: #FFB11B;
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 /*------navbar------*/
@@ -42,6 +53,7 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .navbar-toggler {
   border: none;
 }
@@ -49,6 +61,8 @@ body {
 .navbar-toggler:focus {
   outline: none;
 =======
+=======
+>>>>>>> f1536be (0411 modified by this version)
 .navbar-toggler{
   border: none;
 
@@ -56,11 +70,15 @@ body {
 
 .navbar-toggler:focus {
   outline: none; 
+<<<<<<< HEAD
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+>>>>>>> f1536be (0411 modified by this version)
   box-shadow: none; /* 移除点击后的边框阴影 */
 }
 
 .navbar-toggler:hover {
+<<<<<<< HEAD
 <<<<<<< HEAD
   background-color: #e2e1d6;
 }
@@ -93,6 +111,8 @@ svg path:first-of-type {
 svg {
   color: #ffb11b;
 =======
+=======
+>>>>>>> f1536be (0411 modified by this version)
   background-color: #e2e1d6; 
 }
 
@@ -125,7 +145,10 @@ svg path:first-of-type {
 
 svg{
   color:#FFB11B
+<<<<<<< HEAD
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 #profile-email {
@@ -139,14 +162,19 @@ svg{
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #mypost {
 =======
 #mypost{
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+#mypost{
+>>>>>>> f1536be (0411 modified by this version)
   margin-top: 20px;
 }
 
 .nav-link:hover {
+<<<<<<< HEAD
 <<<<<<< HEAD
   color: #ffb11b;
 }
@@ -156,6 +184,8 @@ hr {
   margin-top: 3px;
   width: calc(100% - 50px);
 =======
+=======
+>>>>>>> f1536be (0411 modified by this version)
   color: #FFB11B
 }
 
@@ -164,7 +194,10 @@ hr{
   margin-top: 3px;;
   width: calc(100% - 50px); 
 
+<<<<<<< HEAD
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
+=======
+>>>>>>> f1536be (0411 modified by this version)
 }
 
 #logout-display {
@@ -172,6 +205,7 @@ hr{
   bottom: 30px;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #mypost,
 #logout-display {
@@ -289,6 +323,36 @@ hr{
   /* 作者信息容器样式 */
   display: flex;
 =======
+=======
+
+
+.post-card {
+  margin-bottom: 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  transition: box-shadow 0.3s ease-in-out;
+  width: 100%; /* 使用相对单位，使卡片宽度自适应屏幕大小 */
+  max-width: auto; 
+  height: auto; /* 自适应高度 */
+  top: auto; /* 移除固定的定位属性 */
+  left: auto; /* 移除固定的定位属性 */
+  gap: 0px; /* 不再需要间隙 */
+  opacity: 1; /* 移除透明度 */
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+>>>>>>> f1536be (0411 modified by this version)
 .card-text {
   font-size: 1rem;
 }
@@ -302,6 +366,7 @@ hr{
 
 .nav-item-flex{
   display: inline-flex;
+<<<<<<< HEAD
 >>>>>>> 54861c8 (sidebar完成&navbar颜色样式修改&logout功能完成)
   align-items: center;
   margin-top: 20px;
@@ -380,3 +445,14 @@ hr{
   }
   
   }
+=======
+  align-items: center;
+}
+
+
+
+/* 加号旋转 45 度 */
+.plus-icon {
+  transform: rotate(90deg);
+}
+>>>>>>> f1536be (0411 modified by this version)

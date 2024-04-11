@@ -20,6 +20,7 @@ document.querySelector("#login-button").addEventListener("click", (event) => {
   const username = username_input.value;
   const password = password_input.value;
 
+<<<<<<< HEAD
   //return to homepage if login is successful
   user
     .login(username, password)
@@ -34,3 +35,14 @@ document.querySelector("#login-button").addEventListener("click", (event) => {
       console.error("Login error:", LoginError);
     });
 });
+=======
+//return to homepage if login is successful
+user.login(username, password).then(userInfo => {
+  window.location.href="home.html"
+}).catch(LoginError => {
+  errorElement.style.display = "block";
+  errorElement.textContent = "Username or password is incorrect.";
+  console.error("Login error:", LoginError);
+})
+})
+>>>>>>> f1536be (0411 modified by this version)

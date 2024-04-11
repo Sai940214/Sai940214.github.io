@@ -7,6 +7,17 @@ let email_input = document.querySelector("#email");
 let errorMessage = document.querySelector("#error");
 let btn = document.querySelector(".btn.btn-dark");
 
+<<<<<<< HEAD
+=======
+// Add keydown event listener to window
+// window.addEventListener("keydown", function (event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     btn.click(); // Trigger button click event
+//   }
+// });
+
+>>>>>>> f1536be (0411 modified by this version)
 // Add Click Button Event
 btn.addEventListener("click", async (event) => {
   event.preventDefault();
@@ -24,14 +35,18 @@ btn.addEventListener("click", async (event) => {
   try {
     const exists = await user.checkEmailExists(email);
 
+<<<<<<< HEAD
     // text
     // const exists = false;
     // console.log(exists);
 
+=======
+>>>>>>> f1536be (0411 modified by this version)
     if (exists) {
       // if exist, to reset2.html
       errorMessage.style.display = "none";
       window.location.href = "../reset2.html";
+<<<<<<< HEAD
       // store email to local
       localStorage.setItem("email", email);
     } else {
@@ -46,3 +61,24 @@ btn.addEventListener("click", async (event) => {
     errorMessage.textContent = "An error occurred. Please try again later.";
   }
 });
+=======
+    }
+    // else {
+    //   // if not exist, display error info
+    //   errorMessage.style.display = "block";
+    //   errorMessage.textContent = "Email does not exist.";
+    // }
+  } catch (error) {
+    let errorMessage = document.querySelector("#error");
+    if (error.message === "not found") {
+      // if not exist, display error info
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "Email does not exist.";
+    } else {
+      console.error("Error:", error);
+    }
+  }
+});
+
+// 222
+>>>>>>> f1536be (0411 modified by this version)
