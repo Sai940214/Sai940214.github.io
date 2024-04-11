@@ -37,6 +37,17 @@ class User {
     return this.#newPassword;
   }
 
+
+  //判断是否log
+  get isLoggedIn(){
+    return this.#username !== undefined ? true : false
+  }
+
+  logout() {
+    this.#username = undefined
+    sessionStorage.removeItem('user')
+  }
+
   async login(username, password) {
     const data = JSON.stringify({ username: username, password: password });
     const response = await fetch(BACKEND_URL + "/user/login", {
