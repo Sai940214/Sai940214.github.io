@@ -107,15 +107,11 @@ class User {
         body: data,
       });
 
-      if (response.status === 200) {
-        // Email exists
+      if (response.ok === true) {
         const json = await response.json();
         return json.exists;
-      } else if (response.status === 404) {
-        // Email does not exist
-        return false;
       } else {
-        throw new Error("Unexpected status code: " + response.status);
+        return false;
       }
     } catch (error) {
       console.error("An error occurred while checking email existence:", error);
