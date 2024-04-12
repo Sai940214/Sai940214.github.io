@@ -182,35 +182,45 @@
       </div>
     </nav>
 
-    <div class="card mb-3" id="posts">
-      <div class="card-body">
-        <h5 class="card-title">Post title</Title></h5>
-				<p class="card-text">
-          <small class="text-body-secondary">2024/4/9 20:00</small>
-        </p>
-        <p class="card-text">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.
-        </p>
+    <!-- post card -->
+    <div class="card" id="postContainer">
+      <div id="loading-message" style="display: none; margin-top: 100px">
+        <strong>loading...</strong>
       </div>
-    </div>
 
-    <div class="card" >
-      <div class="card-body" id="postWithImg">
-        <h5 class="card-title">Post title</h5>
-				<p class="card-text">
+      <!-- <div class="card mb-3">
+        <div class="card-body" id="postWithoutImg">
+          <div class="title">
+            <h5 class="card-title">Post title</Title></h5>
+          </div>
+				  <p class="card-text">
           <small class="text-body-secondary">2024/4/9 20:00</small>
-        </p>
-				<div class="textandPicture">
-					<p class="card-text">
+          </p>
+          <p class="card-text">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.
+          </p>
+        </div>
+        
+        <div class="card-body" id="postWithImg">
+          <div class="title">
+            <h5 class="card-title">Post title</Title></h5>
+          </div>
+				  <p class="card-text">
+            <small class="text-body-secondary">2024/4/9 20:00</small>
+          </p>
+				  <div class="textandPicture">
+					  <p class="card-text textWithImg">
 						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.
-					</p>
-					<div id="postImg">
-						<img src="./img/demo1.jpeg" class="card-img-bottom" alt="postPage" />
-					</div>
-				</div>
-      </div>
+					  </p>
+					  <div class="postImg">
+						  <img src="./img/demo1.jpeg" class="card-img-bottom"  alt="postPage" />
+					  </div>
+          </div>
+        </div> 
+       </div> -->
     </div>
 
-    <script type="module" src="./js/newpost.js"></script>
+    <script type="module" src="./js/mypost.js"></script>
+    <script type="module" src="./js/user.js"></script>
   </body>
 </html>
