@@ -9,5 +9,5 @@ You can check the sessionStorage after login. Use "sessionStorage.getItem("user"
 
 2. In my posts page, the post created by user can not be seen, and after clicking, the page always show the loading words. In this version, it has already been fixed. But there still has a new bug: after refreshing the page, the backend will stop running.
 
-#Addition:
+# Addition:
 1. Added bcrypt into the reset's backend. Now, when the user reset the password, the new password would be stored into database by bcrypt method.
