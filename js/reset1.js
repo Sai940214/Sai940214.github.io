@@ -7,14 +7,6 @@ let email_input = document.querySelector("#email");
 let errorMessage = document.querySelector("#error");
 let btn = document.querySelector(".btn.btn-dark");
 
-// Add keydown event listener to window
-// window.addEventListener("keydown", function (event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     btn.click(); // Trigger button click event
-//   }
-// });
-
 // Add Click Button Event
 btn.addEventListener("click", async (event) => {
   event.preventDefault();

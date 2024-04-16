@@ -27,16 +27,14 @@ async function loadUserPosts(username) {
 //   {
 //     title: "title1",
 //     time: "2024/4/9 20:00",
-//     content:
-//       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.",
+//     content: "content",
 //     thumbnail: "./img/demo1.jpeg",
 //     link: "post1.html",
 //   },
 //   {
 //     title: "title2",
 //     time: "2024/4/9 20:00",
-//     content:
-//       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.",
+//     content: "content",
 //     link: "post2.html",
 //   },
 //   {
