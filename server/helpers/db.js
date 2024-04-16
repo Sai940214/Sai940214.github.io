@@ -4,8 +4,8 @@ const openDb = () => {
   const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'post test',
-    password: '161019',
+    database: 'bbs',
+    password: '0318',
     port: 5432
   })
   return pool

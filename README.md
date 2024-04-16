@@ -1,13 +1,20 @@
-[Details about 15.Apr Version]
+## Details about 16.Apr Version
+This version is modified based on Hanna's version.
 
-This version is modified based on hanna's version
+### Additions:
+1. **Displaying details of each post:** Implemented get details of each post by search postId in the backend. Waiting for the frontend.
 
-# Modification:
-Fix bug:
-1. In login page, email information was missed in sessionStorage. In this version, it has already been fixed.
-You can check the sessionStorage after login. Use "sessionStorage.getItem("user")" in Console section.
 
-2. In my posts page, the post created by user can not be seen, and after clicking, the page always show the loading words. In this version, it has already been fixed. But there still has a new bug: after refreshing the page, the backend will stop running.
+===============================================================================
+Details about 15.Apr Version
 
-# Addition:
-1. Added bcrypt into the reset's backend. Now, when the user reset the password, the new password would be stored into database by bcrypt method.
+This version is modified based on Hanna's version.
+
+Bug Fixes:
+1. **Missing Email in sessionStorage:** Fixed a bug where email information was not stored in sessionStorage after logging in. Users can now verify the stored information using `sessionStorage.getItem("user")` in the browser console.
+
+2. **Displaying User Posts:** Resolved an issue where user-created posts were not visible on the "My Posts" page. Additionally, fixed a bug where clicking on the posts resulted in a perpetual loading state. However, a new bug was introduced where the backend stops running after page refresh. Further investigation is needed to address this issue.
+
+Additions:
+1. **Enhanced Password Reset:** Implemented bcrypt encryption in the backend for password reset functionality. Now, when users reset their password, the new password is securely stored in the database using bcrypt encryption.
+

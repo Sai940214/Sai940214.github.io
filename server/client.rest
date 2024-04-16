@@ -109,7 +109,8 @@ Content-Type: application/json
     "username": "test4"
 }
 
-
+### test post details
+GET http://localhost:3001/post/3
 
 
 

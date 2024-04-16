@@ -38,7 +38,7 @@ postRouter.post("/myPost", async (req, res) => {
   const { username } = req.body;
 
   // for testing
-  console.log(username);
+  // console.log(username);
 
   try {
     const userResult = await query(
@@ -52,7 +52,7 @@ postRouter.post("/myPost", async (req, res) => {
     const userId = userResult.rows[0].user_id;
 
     // for testing
-    console.log(userId);
+    // console.log(userId);
 
     const postResult = await query(
       "SELECT title, content, time FROM post WHERE user_id = $1",
@@ -65,7 +65,36 @@ postRouter.post("/myPost", async (req, res) => {
   }
 
   // for testing
-  console.log(postResult);
+  // console.log(postResult);
+});
+
+// 16.Apr create the function to see the post detail
+postRouter.get("/:postId", async (req, res) => {
+  const postId = req.params.postId;
+
+  // for testing
+  // console.log(postId);
+
+  try {
+    const postResult = await query(
+      "SELECT title, content, time FROM post WHERE post_id = $1",
+      [postId]
+    );
+    // for testing
+    // console.log(postResult);
+    if (postResult.rows.length === 0) {
+      return res.status(404).json({ error: "Post not found" });
+    } else {
+      const postDetail = postResult.rows[0];
+      return res.status(200).json(postDetail);
+    }
+  } catch (error) {
+    console.error("Error cathing post:", error);
+    res.status(500).json({ error: error.message });
+  }
+
+  // for testing
+  // console.log(postDetail);
 });
 
 module.exports = {
