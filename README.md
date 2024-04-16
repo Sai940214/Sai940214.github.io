@@ -1,4 +1,22 @@
 ## Details about 16.Apr Version
+This version is modified based on Taisheng's 16.Apr version.
+
+### Modification:
+1. **Modified database.sql file** This is the newest version of database.
+
+### Additions:
+Backend programming for: 
+But this part still need to be confirmed by the frontend group.
+1. **Editing post**
+2. **Deleting post**
+3. **Inserting comment**
+4. **Editing comment**
+5. **Deleting comment**
+
+
+===============================================================================
+
+Details about 16.Apr Version
 This version is modified based on Hanna's version.
 
 ### Additions:
