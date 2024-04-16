@@ -51,16 +51,6 @@ class User {
     sessionStorage.removeItem("user");
   }
 
-  //判断是否log
-  get isLoggedIn() {
-    return this.#username !== undefined ? true : false;
-  }
-
-  logout() {
-    this.#username = undefined;
-    sessionStorage.removeItem("user");
-  }
-
   async login(username, password) {
     const data = JSON.stringify({ username: username, password: password });
     const response = await fetch(BACKEND_URL + "/user/login", {
@@ -72,6 +62,7 @@ class User {
       const json = await response.json();
       this.#id = json.id;
       this.#username = json.username;
+      this.#email = json.email;
       sessionStorage.setItem("user", JSON.stringify(json));
       return { username: json.username, id: json.id };
     } else {
@@ -223,12 +214,18 @@ class User {
   async getPostsByUsername(username) {
     const data = JSON.stringify({ username: username });
     try {
-      const response = await fetch("/post/myPost");
+      const response = await fetch(BACKEND_URL + "/post/myPost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: username }),
+      });
       if (!response.ok) {
         throw new Error(`Failed to fetch posts for user ${username}`);
       }
       const data = await response.json();
-      return data.posts;
+      return data;
     } catch (error) {
       console.error(
         `An error occurred during getting posts from ${username} :`,

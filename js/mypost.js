@@ -66,6 +66,15 @@ function renderUserPosts(posts) {
   }
   // 清空之前的内容
   postContainer.innerHTML = "";
+
+  // 如果用户没有帖子，显示提示信息
+  if (posts.length === 0) {
+    const noPostMessage = document.createElement("p");
+    noPostMessage.textContent = "You don't have posts.";
+    postContainer.appendChild(noPostMessage);
+    return;
+  }
+
   // 遍历帖子数组，并创建相应的帖子卡片
   posts.forEach((post) => {
     const postCard = createPostCard(post);

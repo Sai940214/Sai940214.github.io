@@ -101,6 +101,14 @@ Content-Type: application/json
     "username": "admin"
 }
 
+### test mypost
+POST http://localhost:3001/post/myPost
+Content-Type: application/json
+
+{
+    "username": "test4"
+}
+
 
 
 
