@@ -37,15 +37,18 @@ class User {
     return this.#newPassword;
   }
 
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
+  }
 
   //判断是否log
-  get isLoggedIn(){
-    return this.#username !== undefined ? true : false
+  get isLoggedIn() {
+    return this.#username !== undefined ? true : false;
   }
 
   logout() {
-    this.#username = undefined
-    sessionStorage.removeItem('user')
+    this.#username = undefined;
+    sessionStorage.removeItem("user");
   }
 
   async login(username, password) {
@@ -59,8 +62,9 @@ class User {
       const json = await response.json();
       this.#id = json.id;
       this.#username = json.username;
+      this.#email = json.email;
       sessionStorage.setItem("user", JSON.stringify(json));
-      return this;
+      return { username: json.username, id: json.id };
     } else {
       throw response.statusText;
     }
@@ -94,15 +98,11 @@ class User {
         body: data,
       });
 
-      if (response.status === 200) {
-        // Email exists
+      if (response.ok === true) {
         const json = await response.json();
         return json.exists;
-      } else if (response.status === 404) {
-        // Email does not exist
-        return false;
       } else {
-        throw new Error("Unexpected status code: " + response.status);
+        return false;
       }
     } catch (error) {
       console.error("An error occurred while checking email existence:", error);
@@ -151,7 +151,10 @@ class User {
         throw new Error(response.statusText);
       }
     } catch (error) {
-      console.error("An error occurred while checking username existence:", error);
+      console.error(
+        "An error occurred while checking username existence:",
+        error
+      );
       throw error;
     }
   }
@@ -192,9 +195,9 @@ class User {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: data
+        body: data,
       });
-    
+
       if (response.ok) {
         const json = await response.json();
         // 根据需要处理json
@@ -207,5 +210,49 @@ class User {
       throw error;
     }
   }
+
+  async getPostsByUsername(username) {
+    const data = JSON.stringify({ username: username });
+    try {
+      const response = await fetch(BACKEND_URL + "/post/myPost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: username }),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch posts for user ${username}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(
+        `An error occurred during getting posts from ${username} :`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  // async deletePost(title) {
+  //   const data = JSON.stringify({ title: title });
+  //   try {
+  //     const response = await fetch(BACKEND_URL + "/post/delete/" + postId, {
+  //       method: "DELETE",
+  //     });
+
+  //     if (response.ok) {
+  //       const json = await response.json();
+  //       // 根据需要处理json
+  //       return json; // 可能包含确认信息或其他数据
+  //     } else {
+  //       throw new Error(response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("An error occurred during post deletion:", error);
+  //     throw error;
+  //   }
+  // }
 }
 export { User };

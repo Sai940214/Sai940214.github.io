@@ -1,17 +1,14 @@
-body {
-  background-color: #fffdfe;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.image {
-  text-align: left;
-}
-
-.carousel {
+body,
+html {
+  font-family: Poppins, sans-serif;
   width: 100%;
-}
-
-#logo {
-  color: #ffb11b;
+  height: 100%;
 }
 
 /*------navbar------*/
@@ -48,6 +45,11 @@ body {
   background-color: #e2e1d6;
 }
 
+#logo {
+  color: #ffb11b;
+}
+
+/*------sidebar------*/
 svg path:nth-of-type(2) {
   fill: #ffb11b;
 }
@@ -93,50 +95,32 @@ hr {
   bottom: 30px;
 }
 
-/* 加号旋转 45 度 */
-.plus-icon {
-  transform: rotate(90deg);
+/*------post card------*/
+#postContainer {
+  margin: 60px 20px 0 20px;
+  border: none;
 }
 
-/*------post-card------*/
-.post-card {
-  margin-bottom: 20px;
+.card-body {
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0px 3px 5px 2px #eae8e8;
   cursor: pointer;
-  border: 1px solid #ece7c0;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: #faf9f0;
-  transition: box-shadow 0.3s ease-in-out;
-  width: 100%; /* 使用相对单位，使卡片宽度自适应屏幕大小 */
-  max-width: auto;
-  height: auto; /* 自适应高度 */
-  top: auto; /* 移除固定的定位属性 */
-  left: auto; /* 移除固定的定位属性 */
-  gap: 0px; /* 不再需要间隙 */
-  opacity: 1; /* 移除透明度 */
+  width: 100%;
 }
 
-.post-card:hover {
-  box-shadow: 0 4px 8px rgba(154, 107, 26, 0.1);
+.contentAndThumbnail {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
-.card-title {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+.contentWithThumbnail {
+  margin-right: 50px;
 }
 
-.card-text {
-  font-size: 1rem;
-}
-
-.post-thumbnail {
-  width: 100px;
-  height: auto;
-  float: right;
-  margin-left: 15px;
-}
-
-.nav-item-flex {
-  display: inline-flex;
-  align-items: center;
+.postThumbnail {
+  width: 200px;
+  border-radius: 8px;
 }
