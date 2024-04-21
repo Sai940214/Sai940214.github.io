@@ -41,7 +41,7 @@ class Posts {
 
      // 对帖子数组按照时间降序排序
   this.#posts.sort((a, b) => {
-    return new Date(b.saved) - new Date(a.saved);
+    return new Date(b.time) - new Date(a.time);
   });
   }
 }

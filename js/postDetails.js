@@ -19,7 +19,7 @@ console.log(postDetail);
 //   saved: "2024/4/9 20:00",
 //   content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim dapibus quis id convallis vitae auctor feugiat massa. Semper ac blandit neque vulputate tincidunt venenatis. Orci lectus enim nunc proin lobortis faucibus vulputate in consectetur. Turpis morbi morbi pharetra, nunc, eu consequat id cursus. Mauris erat gravida viverra et blandit enim nunc amet, placerat. Vel, id lacinia arcu, neque etiam morbi consectetur non leo. ",
 //   picture:  "./img/demo3.jpeg",
-//   formattedSaved: function() {
+//   formattedtime: function() {
 //     return this.saved; 
 //   }
 // };
@@ -39,7 +39,7 @@ function createPostElement(post) {
 
     const savedElement = document.createElement("p");
     savedElement.classList.add("post-saved");
-    savedElement.textContent = "Saved: " + post.formattedSaved();
+    savedElement.textContent = post.formattedtime();
 
     const contentElement = document.createElement("p");
     contentElement.classList.add("post-content");
