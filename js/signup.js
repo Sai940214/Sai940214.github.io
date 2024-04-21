@@ -11,12 +11,12 @@ let error = document.querySelector("#error");
 let btn = document.querySelector(".btn.btn-dark");
 
 // Add keydown event listener to window
-window.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    btn.click(); // Trigger button click event
-  }
-});
+// window.addEventListener("keydown", function (event) {
+//   if (event.key === "Enter") {
+//     event.preventDefault();
+//     btn.click(); // Trigger button click event
+//   }
+// });
 
 btn.addEventListener("click", async (event) => {
   event.preventDefault();
@@ -43,6 +43,36 @@ btn.addEventListener("click", async (event) => {
       return;
     }
 
+    // Check if username input is empty
+    if (!username) {
+      // If username input is empty, display an error message
+      error.style.display = "block";
+      error.textContent = "Please enter your username.";
+      return;
+    } else {
+      error.style.display = "none";
+    }
+
+    // Check if email input is empty
+    if (!email) {
+      // If email input is empty, display an error message
+      error.style.display = "block";
+      error.textContent = "Please enter your email address.";
+      return;
+    } else {
+      error.style.display = "none";
+    }
+
+    // Check if password input is empty
+    if (!password) {
+      // If password input is empty, display an error message
+      error.style.display = "block";
+      error.textContent = "Please enter your password.";
+      return;
+    } else {
+      error.style.display = "none";
+    }
+
     // Verify Password
     if (password !== confirmPassword) {
       error.style.display = "block";
@@ -57,6 +87,8 @@ btn.addEventListener("click", async (event) => {
   } catch (error) {
     // Handle any errors
     console.error(error);
-    alert("An error occurred. Please try again later.");
+    const errorMessage = document.getElementById("error");
+    errorMessage.style.display = "block";
+    errorMessage.textContent = "Invalid username or email.";
   }
 });
