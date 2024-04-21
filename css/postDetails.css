@@ -63,51 +63,57 @@
     color: #ffb11b;
   }
   
-  /*------sidebar------*/
-  svg path:nth-of-type(2) {
-    fill: #ffb11b;
-  }
-  
-  svg path:nth-of-type(3) {
-    fill: #ffb11b;
-  }
-  
-  svg path:first-of-type {
-    fill: #ffb11b;
-  }
-  
-  svg {
-    color: #ffb11b;
-  }
-  
-  #profile-email {
-    margin-top: 10px;
-    font-size: 18x;
-  }
-  
-  .nav-item-flex svg {
-    margin-right: 5px;
-    margin-left: -3px;
-  }
-  
-  #mypost {
-    margin-top: 20px;
-  }
-  
-  .nav-link:hover {
-    color: #ffb11b;
-  }
-  
-  hr {
-    color: #ffb11b;
-    margin-top: 3px;
-    width: calc(100% - 50px);
-  }
-  
-  #logout-display {
-    position: fixed;
-    bottom: 30px;
-  }
+ /*------sidebar------*/
+svg path:nth-of-type(2) {
+  fill: #ffb11b;
+}
+
+svg path:nth-of-type(3) {
+  fill: #ffb11b;
+}
+
+svg path:first-of-type {
+  fill: #ffb11b;
+}
+
+svg {
+  color: #ffb11b;
+}
+
+#profile-email {
+  margin-top: 10px;
+}
+
+.nav-item-flex svg {
+  margin-right: 5px;
+  margin-left: -3px;
+}
+
+#mypost {
+  margin-top: 20px;
+  margin-right: 5px;
+}
+
+.nav-link:hover {
+  color: #ffb11b;
+}
+
+hr {
+  color: #ffb11b;
+  margin-top: 3px;
+  width: calc(100% - 50px);
+}
+
+#logout-display {
+  position: fixed;
+  bottom: 30px;
+}
+
+#mypost,
+#logout-display {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+}
 
   /*------post details------*/
 

@@ -35,9 +35,14 @@ class Posts {
     this.#posts = []; // 清空posts数组，防止数据重复
 
     json.forEach(node => {
-        const post = new Post(node.id, node.title, node.content, null, node.saved, null, null);
-        this.#posts.push(post);
+      const post = new Post(node.post_id, node.title, node.content, null, node.time, node.username, null);
+      this.#posts.unshift(post); // 将新帖子添加到数组开头
     });
+
+     // 对帖子数组按照时间降序排序
+  this.#posts.sort((a, b) => {
+    return new Date(b.saved) - new Date(a.saved);
+  });
   }
 }
 
