@@ -17,6 +17,19 @@ class Posts {
     })
   }
 
+  getPostDetails = (id) => {
+    return new Promise(async(resolve, reject) => {
+      fetch(BACKEND_URL + '/:postId')
+      .then(response => response.json())
+      .then(json => {
+        this.readJson(json) 
+        resolve(this.#posts)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
+
   readJson = (json) => {
     console.log("Processing JSON data:", json); // 添加日志语句
     this.#posts = []; // 清空posts数组，防止数据重复
