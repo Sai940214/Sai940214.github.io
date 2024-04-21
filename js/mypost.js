@@ -73,6 +73,14 @@ function renderUserPosts(posts) {
     return;
   }
 
+  // 按时间排序帖子
+  posts.sort((a, b) => {
+    // 将时间字符串转换为日期对象进行比较
+    const dateA = new Date(a.time);
+    const dateB = new Date(b.time);
+    return dateB - dateA; // 按时间降序排序
+  });
+
   // 遍历帖子数组，并创建相应的帖子卡片
   posts.forEach((post) => {
     const postCard = createPostCard(post);
@@ -92,17 +100,22 @@ function createPostCard(post) {
   title.textContent = post.title;
 
   // create time
-  const time = document.createElement("p");
-  time.classList.add("card-text");
+ const time = document.createElement("p");
+  time.classList.add("card-time");
+  const formattedTime = formatTime(post.time); // 格式化时间
   const smallTime = document.createElement("small");
   smallTime.classList.add("text-body-secondary");
-  smallTime.textContent = post.time;
+  smallTime.textContent = formattedTime;
   time.appendChild(smallTime);
 
   // create content
   const content = document.createElement("p");
   content.classList.add("card-text");
-  content.textContent = post.content;
+  let limitedContent = post.content.substring(0, 200); // Limit content to 200 characters
+  if (post.content.length > 200) {
+    limitedContent += "..."; // Append "..." if content exceeds 200 characters
+  }
+  content.textContent = limitedContent;
 
   // create thumbnail
   const thumbnail = document.createElement("img");
@@ -152,3 +165,15 @@ window.addEventListener("load", function () {
   loadUserPosts(username);
   // renderUserPosts(posts);
 });
+
+// 格式化时间
+function formatTime(timeString) {
+  const date = new Date(timeString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}

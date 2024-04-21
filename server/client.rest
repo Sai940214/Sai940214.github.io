@@ -147,3 +147,11 @@ Content-Type: application/json
     "username": "user1",
     "commentId": 1
 }
+
+### test homepost
+GET  http://localhost:3001/post/homepost
+
+Content-Type: application/json
+{
+
+}

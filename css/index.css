@@ -6,11 +6,13 @@
 
 body, html {
   height: 100%;
+  backdrop-filter: blur(10px); 
+  margin: 0;
 }
 
 .container-fluid {
   display: flex;
-  flex-direction: column;
+  flex-direction: center;
   justify-content: center;
   align-items: center;
   min-height: 100vh;

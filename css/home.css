@@ -93,6 +93,13 @@ hr {
   bottom: 30px;
 }
 
+#mypost,
+#logout-display {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+}
+
+
 /* 加号旋转 45 度 */
 .plus-icon {
   transform: rotate(90deg);
@@ -107,36 +114,58 @@ hr {
   padding: 20px;
   background-color: #faf9f0;
   transition: box-shadow 0.3s ease-in-out;
-  width: 100%; /* 使用相对单位，使卡片宽度自适应屏幕大小 */
+  width: calc(100% - 16px); /* 计算总宽度 */ 
   max-width: auto;
-  height: auto; /* 自适应高度 */
+  height: auto; 
   top: auto; /* 移除固定的定位属性 */
   left: auto; /* 移除固定的定位属性 */
-  gap: 0px; /* 不再需要间隙 */
-  opacity: 1; /* 移除透明度 */
+  margin-left: 8px; 
+  margin-right: 8px; 
 }
 
 .post-card:hover {
-  box-shadow: 0 4px 8px rgba(154, 107, 26, 0.1);
+  box-shadow: 0 4px 8px rgba(93, 62, 7, 0.1);
 }
 
-.card-title {
-  font-size: 1.2rem;
+
+/*------postcard-author------*/
+.post-title {
+  /* 标题样式 */
+  font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
-.card-text {
-  font-size: 1rem;
-}
-
-.post-thumbnail {
-  width: 100px;
-  height: auto;
-  float: right;
-  margin-left: 15px;
-}
-
-.nav-item-flex {
-  display: inline-flex;
+.author-info {
+  /* 作者信息容器样式 */
+  display: flex;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: -8px;
 }
+
+.author-avatar {
+  /* 作者头像样式 */
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-top: -19px;;
+  margin-left: 2px;
+}
+
+.author-details {
+  /* 作者名字和发布时间容器样式 */
+  margin-left: 8px; /* 调整名字和时间距离头像的间距 */
+}
+
+.author-name{
+  margin-bottom: 2px;
+}
+.author-name, .post-time {
+  /* 作者名字和发布时间样式 */
+  font-size: 0.75rem;
+  color: grey;
+  display: block; /* 确保名字和时间显示在不同行 */
+}
+
+
+

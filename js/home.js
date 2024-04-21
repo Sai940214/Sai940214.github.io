@@ -26,12 +26,21 @@ const renderPosts = async () => {
   postsArray.forEach((post) => {
     console.log("Rendering post:", post);
 
+    // 截取 post.content
+    const shortenedContent = post.content.length > 200 ? post.content.substring(0, 200) + "..." : post.content;
+
     const postCard = document.createElement("div");
     postCard.classList.add("post-card");
     postCard.innerHTML = `
-      <h2>${post.title}</h2>
-      <p>${post.content}</p>
-      <p>${post.formattedSaved}</p>
+    <h2 class="post-title">${post.title}</h2>
+    <div class="author-info">
+      <img src="./img/demo5.png" alt="Author Avatar" class="author-avatar">
+      <div class="author-details">
+        <p class="author-name">@${post.author}</p>
+        <p class="post-time">${post.formattedtime}</p>
+      </div>
+    </div>
+    <p class="post-content">${shortenedContent}</p>
     `;
     postsContainer.appendChild(postCard);
   });

@@ -7,7 +7,7 @@ const postRouter = express.Router();
 //added homepage post
 postRouter.get("/homepost", async (req, res) => {
   try {
-    const result = await query("select * from post");
+    const result = await query("select post.* ,users.username from post inner join users on post.user_id = users.user_id ");
     const rows = result.rows ? result.rows : [];
     res.status(200).json(rows);
   } catch (error) {
