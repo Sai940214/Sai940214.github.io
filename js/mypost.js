@@ -1,6 +1,9 @@
 import { User } from "./class/User.js";
 let user = new User();
 
+import { Post } from "./class/Post.js";
+const post = new Post();
+
 // get username from local storage
 const username = localStorage.getItem("username");
 
@@ -149,8 +152,13 @@ function createPostCard(post) {
     card.appendChild(content);
   }
 
-  card.addEventListener("click", function () {
-    window.location.href = post.link;
+  card.addEventListener("click", async function () {
+    try {
+      const id = await post.getPostId(id);
+      window.location.href = `postDetails.html?id=${id}`;
+    } catch (error) {
+      console.error("An error occurred while redirecting to post detail:", error);
+    }
   });
 
   return card;

@@ -120,14 +120,15 @@ hr {
  #post-section {
     display: flex;
     flex-direction:column;
-    justify-content: flex-end; /* 将内容顶部对齐 */
+    justify-content: center; /* 将内容顶部对齐 */
     /* padding-top: 120px; 给内容区域增加顶部空间，确保不被导航栏遮挡 */
     box-sizing: border-box;
     height: 100vh;
-    margin-top:200px;
+    margin-top:150px;
   }
-  .postDetail{
-    margin-bottom: 20px;
+
+  .postDetailContainer{
+    margin-bottom: 10px;
   }
 
   /* 帖子标题样式 */

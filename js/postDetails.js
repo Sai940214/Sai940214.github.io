@@ -5,14 +5,13 @@ const posts = new Posts();
 const urlParams = new URLSearchParams(window.location.search);
 // 从查询参数中获取帖子的 ID
 const postId = urlParams.get('id');
+console.log(postId);
 
 // 获取页面上用于显示帖子详细内容的元素
-const postContainer = document.querySelector('.container');
-console.log(postContainer);
-const postDetail = document.querySelector('.postDetail');
-console.log(postDetail);
+const postDetailContainer = document.querySelector('.postDetailContainer');
+console.log(postDetailContainer);
 
-// // for test
+// for test
 // const post = {
 //   title: "This is the title!!",
 //   author: "user",
@@ -26,8 +25,8 @@ console.log(postDetail);
 
 // 创建帖子元素的函数
 function createPostElement(post) {
-    // const postDetail = document.createElement("div");
-    // postDetail.classList.add("postDetail");
+    const postDetailElement = document.createElement("div");
+    postDetailElement.classList.add("post-detail");
 
     const titleElement = document.createElement("h2");
     titleElement.classList.add("post-title");
@@ -50,25 +49,24 @@ function createPostElement(post) {
     pictureElement.setAttribute("src", post.picture);
     pictureElement.setAttribute("alt", "picture");
 
-    postDetail.appendChild(titleElement);
-    postDetail.appendChild(authorElement);
-    postDetail.appendChild(savedElement);
-    postDetail.appendChild(contentElement);
-    postDetail.appendChild(pictureElement);
+    postDetailElement.appendChild(titleElement);
+    postDetailElement.appendChild(authorElement);
+    postDetailElement.appendChild(savedElement);
+    postDetailElement.appendChild(contentElement);
+    postDetailElement.appendChild(pictureElement);
     
-    return postDetail;
+    return postDetailElement;
 }
 
 // 加载帖子的详细内容并显示在页面上
 async function loadPostDetails(id) {
     try {
         // 使用 Posts 类中的方法获取帖子的详细内容
-        const post = await posts.getPostDetails(id);
+        const post = await posts.getPostDetails(id);        
 
         // 创建帖子元素并将其添加到页面上
-        const postDetail = createPostElement(post);
-        postContainer.appendChild(postDetail);
-        // document.body.appendChild(postElement);
+        const postDetailElement = createPostElement(post);
+        postDetailContainer.appendChild(postDetailElement);
 
     } catch (error) {
         console.error("An error occurred while loading post details:", error);
@@ -83,7 +81,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // like button
 // 获取点赞按钮和点赞数显示的元素
 const likeButton = document.querySelector(".like-button");
-console.log(likeButton);
+// console.log(likeButton);
 const likeCountElement = document.getElementById("like-count");
 
 // 初始化点赞数

@@ -19,7 +19,8 @@ class Posts {
 
   getPostDetails = (id) => {
     return new Promise(async(resolve, reject) => {
-      fetch(BACKEND_URL + '/:postId')
+      fetch(`${BACKEND_URL}/post/${id}`)
+      // fetch(BACKEND_URL + '/:postId')
       .then(response => response.json())
       .then(json => {
         this.readJson(json) 

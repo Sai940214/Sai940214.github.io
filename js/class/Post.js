@@ -55,6 +55,22 @@ class Post {
   get comments() {
     return this.#comments
   }
+
+  async getPostId(id) {
+    const data = JSON.stringify({ id: id });
+    const response = await fetch(BACKEND_URL + "/user/getPostId", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: data,
+    });
+    if (response.ok === true) {
+      const json = await response.json();
+      this.#id = json.id;
+      return json.id ;
+    } else {
+      throw response.statusText;
+    }
+  }
 }
 
 export { Post }
