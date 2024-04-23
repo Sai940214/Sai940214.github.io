@@ -1,11 +1,15 @@
-import { Posts } from "./class/Posts.js";
-const posts = new Posts();
+import { Post } from "./class/Post.js";
+const post = new Post();
+
+import { User } from "./class/User.js";
+const user = new User();
 
 // 获取 URL 中的查询参数
 const urlParams = new URLSearchParams(window.location.search);
 // 从查询参数中获取帖子的 ID
 const postId = urlParams.get('id');
-console.log(postId);
+// for test 
+// console.log(postId);
 
 // 获取页面上用于显示帖子详细内容的元素
 const postDetailContainer = document.querySelector('.postDetailContainer');
@@ -23,7 +27,7 @@ console.log(postDetailContainer);
 //   }
 // };
 
-// 创建帖子元素的函数
+// Create post details element
 function createPostElement(post) {
     const postDetailElement = document.createElement("div");
     postDetailElement.classList.add("post-detail");
@@ -34,11 +38,11 @@ function createPostElement(post) {
 
     const authorElement = document.createElement("p");
     authorElement.classList.add("post-author");
-    authorElement.textContent = "@" + post.author;
+    authorElement.textContent = "@" + post.username;
 
     const savedElement = document.createElement("p");
     savedElement.classList.add("post-saved");
-    savedElement.textContent = post.formattedtime();
+    savedElement.textContent = post.formattedtime;
 
     const contentElement = document.createElement("p");
     contentElement.classList.add("post-content");
@@ -53,82 +57,86 @@ function createPostElement(post) {
     postDetailElement.appendChild(authorElement);
     postDetailElement.appendChild(savedElement);
     postDetailElement.appendChild(contentElement);
-    postDetailElement.appendChild(pictureElement);
-    
+
+    // check if the post have a picture
+    if(post.picture){
+        // if the picture exits, insert it into the page
+        postDetailElement.appendChild(pictureElement);
+    } 
+
     return postDetailElement;
 }
 
-// 加载帖子的详细内容并显示在页面上
 async function loadPostDetails(id) {
     try {
-        // 使用 Posts 类中的方法获取帖子的详细内容
-        const post = await posts.getPostDetails(id);        
-
-        // 创建帖子元素并将其添加到页面上
-        const postDetailElement = createPostElement(post);
+        const postDetail = await post.fetchPostDetails(id);     
+        const postDetailElement = createPostElement(postDetail);
         postDetailContainer.appendChild(postDetailElement);
-
+        setupLikeButton();
+        setupCommentSection();
     } catch (error) {
         console.error("An error occurred while loading post details:", error);
     }
 }
 
-// 在页面加载完成后，调用加载帖子详细内容的函数
-window.addEventListener("DOMContentLoaded", () => {
-  loadPostDetails(postId);
-});
 
-// like button
+//------------------------ like button ------------------------
 // 获取点赞按钮和点赞数显示的元素
-const likeButton = document.querySelector(".like-button");
-// console.log(likeButton);
-const likeCountElement = document.getElementById("like-count");
+function setupLikeButton(){
+    const likeButton = document.querySelector(".like-button");
+    const likeCountElement = document.getElementById("like-count");
+    // Initialize the number of likes
+    let likeCount = 0;
+    // add event listener when click 'like'
+    likeButton.addEventListener("click", () => {
+        likeCount++;
+        likeCountElement.textContent = likeCount.toString();
+    });
+}
 
-// 初始化点赞数
-let likeCount = 0;
-
-// 点赞按钮点击事件处理函数
-likeButton.addEventListener("click", () => {
-    // 增加点赞数
-    likeCount++;
-    // 更新显示的点赞数
-    likeCountElement.textContent = likeCount.toString();
-});
-
-
-// display the new comment
-document.addEventListener("DOMContentLoaded", function() {
+//------------------------ comment section ------------------------
+function setupCommentSection() {
     const commentInput = document.getElementById("comment-input");
     const commentButton = document.querySelector(".comment-section button");
     const commentsContainer = document.querySelector(".comments");
 
-    commentButton.addEventListener("click", function() {
+    commentButton.addEventListener("click", async function() {
         const commentText = commentInput.value.trim();
         if (commentText !== "") {
-            const commentElement = createCommentElement(commentText);
-            commentsContainer.appendChild(commentElement);
-            commentInput.value = ""; // 清空评论输入框
+            try {
+                await post.insertComment(postId, user.username, commentText);
+                const commentElement = createCommentElement(commentText);
+                commentsContainer.appendChild(commentElement);
+                commentInput.value = ""; // 清空评论输入框
+            } catch (error) {
+                console.error("An error occurred while inserting comment:", error);
+            }
         }
-    });
+    })
+};
 
-    function createCommentElement(commentText) {
-        const commentElement = document.createElement("div");
-        commentElement.classList.add("comment");
+function createCommentElement(commentText) {
+    const commentElement = document.createElement("div");
+    commentElement.classList.add("comment");
+
+    const commenterId = user.username;
+ 
+    const commentTime = new Date().toLocaleString(); // get current time
+
+    const commentInfoElement = document.createElement("p");
+    commentInfoElement.classList.add("comment-info");
+    commentInfoElement.textContent = `Comment by ${commenterId} at ${commentTime}`;
+
+    const commentTextElement = document.createElement("p");
+    commentTextElement.textContent = commentText;
+
+    commentElement.appendChild(commentInfoElement);
+    commentElement.appendChild(commentTextElement);
         
-        const commenterId = "User123"; // 可以替换为实际的评论人ID
-        const commentTime = new Date().toLocaleString(); // 获取当前时间
+    return commentElement;
+};
 
-        const commentInfoElement = document.createElement("p");
-        commentInfoElement.classList.add("comment-info");
-        commentInfoElement.textContent = `Comment by ${commenterId} at ${commentTime}`;
-
-        const commentTextElement = document.createElement("p");
-        commentTextElement.textContent = commentText;
-
-        commentElement.appendChild(commentInfoElement);
-        commentElement.appendChild(commentTextElement);
-        
-        return commentElement;
-    }
+// 在页面加载完成后，调用加载帖子详细内容的函数
+window.addEventListener("DOMContentLoaded", () => {
+    loadPostDetails(postId)
 });
-

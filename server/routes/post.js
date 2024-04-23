@@ -68,7 +68,7 @@ postRouter.post("/myPost", async (req, res) => {
     // console.log(userId);
 
     const postResult = await query(
-      "SELECT title, content, time FROM post WHERE user_id = $1",
+      "SELECT post_id, title, content, time FROM post WHERE user_id = $1",
       [userId]
     );
     res.status(200).json(postResult.rows);
@@ -90,7 +90,7 @@ postRouter.get("/:postId", async (req, res) => {
 
   try {
     const postResult = await query(
-      "SELECT title, content, time FROM post WHERE post_id = $1",
+      "SELECT username, post_id, title, content, time FROM post p JOIN users u ON p.user_id = u.user_id WHERE post_id = $1",
       [postId]
     );
     // for testing

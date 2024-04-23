@@ -154,8 +154,7 @@ function createPostCard(post) {
 
   card.addEventListener("click", async function () {
     try {
-      const id = await post.getPostId(id);
-      window.location.href = `postDetails.html?id=${id}`;
+      window.location.href = `postDetails.html?id=${post.post_id}`;
     } catch (error) {
       console.error("An error occurred while redirecting to post detail:", error);
     }

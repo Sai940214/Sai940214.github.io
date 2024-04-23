@@ -1,3 +1,14 @@
+import { BACKEND_URL } from '../config.js'
+
+// Define the Comment class
+class Comment{
+  constructor(postId, username, text){
+    this.postId = postId;
+    this.username = username;
+    this.text = text;
+  }
+}
+
 class Post {
   #id
   #title
@@ -56,19 +67,43 @@ class Post {
     return this.#comments
   }
 
-  async getPostId(id) {
-    const data = JSON.stringify({ id: id });
-    const response = await fetch(BACKEND_URL + "/user/getPostId", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: data,
-    });
-    if (response.ok === true) {
+  // get post details
+  async fetchPostDetails(id) {
+    try {
+      const response = await fetch(`${BACKEND_URL}/post/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch post details');
+      }
+      const postData = await response.json();
+      // for test
+      // console.log('Author:', postData.username);
+      console.log(postData.comments);
+      // 解构获取的数据并返回
+      const { id: postID, title, content, image, time, username, comments } = postData;
+      return { id: postID, title, content, image, time, username, comments };
+    } catch (error) {
+      throw error; // 如果发生错误，则抛出错误
+    }
+  }
+
+  // Insert new comment to the database
+  async insertComment(postId, username, text) {
+    try {
+      const comment = new Comment(postId, username, text);
+      console.log(comment);
+      const data = JSON.stringify(comment);
+      const response = await fetch(`${BACKEND_URL}/post/insertComment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+      });
+      if (!response.ok) {
+        throw new Error('Failed to insert comment');
+      }
       const json = await response.json();
-      this.#id = json.id;
-      return json.id ;
-    } else {
-      throw response.statusText;
+      return json.id;
+    } catch (error) {
+      throw error;
     }
   }
 }

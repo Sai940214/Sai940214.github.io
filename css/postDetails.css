@@ -120,15 +120,19 @@ hr {
  #post-section {
     display: flex;
     flex-direction:column;
-    justify-content: center; /* 将内容顶部对齐 */
-    /* padding-top: 120px; 给内容区域增加顶部空间，确保不被导航栏遮挡 */
+    justify-content: center; 
     box-sizing: border-box;
     height: 100vh;
-    margin-top:150px;
+    margin:0 20px 0 20px;
   }
-
+  .postWithEdit{
+    display:flex;
+    justify-content: space-between;
+  }
+/* —————————————————————— post detail —————————————————————— */
   .postDetailContainer{
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    margin-right: 20px;
   }
 
   /* 帖子标题样式 */
@@ -164,7 +168,21 @@ hr {
     width: 100%;
   }
 
-/* like style */
+/* —————————————————————— edit & delete —————————————————————— */
+.edit-section{
+  display: flex;
+  flex-direction: row;
+}
+
+.icon{
+  cursor: pointer;
+}
+
+#edit-icon, #delete-icon{
+  margin:5px;
+}
+
+/* —————————————————————— like style —————————————————————— */
 .like-button{
   cursor: pointer;
 }
