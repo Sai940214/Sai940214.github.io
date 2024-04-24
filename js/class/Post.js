@@ -75,12 +75,18 @@ class Post {
         throw new Error('Failed to fetch post details');
       }
       const postData = await response.json();
-      // for test
-      // console.log('Author:', postData.username);
       console.log(postData.comments);
       // 解构获取的数据并返回
       const { id: postID, title, content, image, time, username, comments } = postData;
-      return { id: postID, title, content, image, time, username, comments };
+
+      // 解析 comments 数组中的每个对象，提取所需的属性
+      const parsedComments = [];
+      for (const comment of comments) {
+        const { text, username, time } = comment;
+        parsedComments.push({ text, username, time });
+      }
+
+      return { id: postID, title, content, image, time, username, comments: parsedComments };
     } catch (error) {
       throw error; // 如果发生错误，则抛出错误
     }
@@ -90,7 +96,8 @@ class Post {
   async insertComment(postId, username, text) {
     try {
       const comment = new Comment(postId, username, text);
-      console.log(comment);
+      // for test
+      // console.log(comment);
       const data = JSON.stringify(comment);
       const response = await fetch(`${BACKEND_URL}/post/insertComment`, {
         method: 'POST',

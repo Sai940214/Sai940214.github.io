@@ -88,21 +88,49 @@ postRouter.get("/:postId", async (req, res) => {
   // for testing
   // console.log(postId);
 
+  // try {
+  //   const postResult = await query(
+  //     "SELECT u.username, p.post_id, p.title, p.content, p.time c.comment_id, c.text, c.time FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id WHERE p.post_id = $1",
+  //     [postId]
+  //   );
+  //   // for testing
+  //   // console.log(postResult);
+  //   if (postResult.rows.length === 0) {
+  //     return res.status(404).json({ error: "Post not found" });
+  //   } else {
+  //     const postDetail = postResult.rows[0];
+  //     return res.status(200).json(postDetail);
+  //   }
+  // } catch (error) {
+  //   console.error("Error cathing post:", error);
+  //   res.status(500).json({ error: error.message });
+  // }
+
   try {
     const postResult = await query(
-      "SELECT username, post_id, title, content, time FROM post p JOIN users u ON p.user_id = u.user_id WHERE post_id = $1",
+      "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time, c.comment_id, c.text, c.time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
       [postId]
     );
-    // for testing
-    // console.log(postResult);
     if (postResult.rows.length === 0) {
       return res.status(404).json({ error: "Post not found" });
     } else {
-      const postDetail = postResult.rows[0];
+      const postDetail = {
+        post_id: postResult.rows[0].post_id,
+        title: postResult.rows[0].title,
+        content: postResult.rows[0].content,
+        time: postResult.rows[0].time,
+        username: postResult.rows[0].post_username,
+        comments: postResult.rows.map(row => ({
+          comment_id: row.comment_id,
+          text: row.text,
+          time: row.time,
+          username: row.comment_username
+        }))
+      };
       return res.status(200).json(postDetail);
     }
   } catch (error) {
-    console.error("Error cathing post:", error);
+    console.error("Error catching post:", error);
     res.status(500).json({ error: error.message });
   }
 
