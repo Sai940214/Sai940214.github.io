@@ -75,22 +75,37 @@ class Post {
         throw new Error('Failed to fetch post details');
       }
       const postData = await response.json();
-      console.log(postData.comments);
       // 解构获取的数据并返回
       const { id: postID, title, content, image, time, username, comments } = postData;
 
       // 解析 comments 数组中的每个对象，提取所需的属性
       const parsedComments = [];
       for (const comment of comments) {
-        const { text, username, time } = comment;
-        parsedComments.push({ text, username, time });
+        const { text, username, time, comment_id} = comment;
+        parsedComments.push({ text, username, time, comment_id });
       }
-
       return { id: postID, title, content, image, time, username, comments: parsedComments };
     } catch (error) {
       throw error; // 如果发生错误，则抛出错误
     }
   }
+  
+  // delete post
+  async deletePost(postId, username){
+    try {
+      const response = await fetch(`${BACKEND_URL}/post/deletePost/${postId}?username=${username}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete post');
+    }
+    return 'Post deleted successfully';
+      } catch (error) {
+    throw error;
+    }
+  }
+
 
   // Insert new comment to the database
   async insertComment(postId, username, text) {
@@ -110,6 +125,24 @@ class Post {
       const json = await response.json();
       return json.id;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  // delete comment
+  async deleteComment(comment_id, username){
+    try {
+      console.log(comment_id);
+      console.log(username);
+      const response = await fetch(`${BACKEND_URL}/post/deleteComment/${comment_id}?username=${username}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete comment');
+      }
+      return 'Comment deleted successfully';
+        } catch (error) {
       throw error;
     }
   }

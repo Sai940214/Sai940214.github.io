@@ -84,7 +84,7 @@ Content-Type: application/json
 }
 
 ### test post details
-GET http://localhost:3001/post/1
+GET http://localhost:3001/post/3
 
 ### test add a new post
 POST http://localhost:3001/post/create

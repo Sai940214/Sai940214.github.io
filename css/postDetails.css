@@ -169,7 +169,13 @@ hr {
     width: 100%;
   }
 
-/* —————————————————————— edit & delete —————————————————————— */
+.titleWithIcons {
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between; 
+}
+
+/* —————————————————————— post edit & delete —————————————————————— */
 .edit-section{
   display: flex;
   flex-direction: row;
@@ -211,3 +217,13 @@ hr {
   margin-bottom:20px;
 }
 
+.infoWithDeleteIcon{
+  display: flex;
+  justify-content: space-between;
+}
+
+#delete-icon {
+  width:18px;
+  fill:#ffb11b;
+  cursor: pointer;
+}
