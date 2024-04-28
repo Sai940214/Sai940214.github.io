@@ -2,6 +2,8 @@ import { Posts } from "./class/Posts.js";
 
 const posts = new Posts();
 
+import { Post } from "./class/Post.js";
+const post = new Post();
 //17.Apr连接后端获取帖子
 // 获取帖子
 const getPosts = async () => {
@@ -43,6 +45,14 @@ const renderPosts = async () => {
     <p class="post-content">${shortenedContent}</p>
     `;
     postsContainer.appendChild(postCard);
+    
+    postCard.addEventListener("click", async function () {
+      try {
+        window.location.href = `postDetails.html?id=${post.post_id}`;
+      } catch (error) {
+        console.error("An error occurred while redirecting to post detail:", error);
+      }
+    });
   });
 };
 

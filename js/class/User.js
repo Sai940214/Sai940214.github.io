@@ -180,7 +180,7 @@ class User {
     }
   }
 
-  async newPost(title, content, username) {
+  async newPost(title, content, username, file) {
     // const data = JSON.stringify({
     //   title: title,
     //   content: content,

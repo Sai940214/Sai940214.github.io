@@ -1,7 +1,9 @@
 -- Drop some tables firstly
-DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS post;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS post CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS post_like CASCADE;
+DROP TABLE IF EXISTS comment_like CASCADE;
 
 -- Create some new tables
 CREATE TABLE users (
@@ -15,6 +17,7 @@ CREATE TABLE post (
   post_id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
+  image_name VARCHAR(255),
   time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   like_count INTEGER,
   user_id INTEGER REFERENCES users(user_id)
@@ -27,6 +30,24 @@ CREATE TABLE comment (
   like_count INTEGER,
   user_id INTEGER REFERENCES users(user_id),
   post_id INTEGER REFERENCES post(post_id)
+);
+
+CREATE TABLE post_like (
+    post_like_id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    UNIQUE(post_id, user_id)
+);
+
+CREATE TABLE comment_like (
+    comment_like_id SERIAL PRIMARY KEY,
+    comment_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (comment_id) REFERENCES comment(comment_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    UNIQUE(comment_id, user_id)
 );
 
 -- *** Maybe cause some errors in this part, because the passwords are stored in an encrypted method on the backend.
