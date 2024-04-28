@@ -2,8 +2,6 @@ import { Posts } from "./class/Posts.js";
 
 const posts = new Posts();
 
-import { Post } from "./class/Post.js";
-const post = new Post();
 //17.Apr连接后端获取帖子
 // 获取帖子
 const getPosts = async () => {
@@ -44,20 +42,21 @@ const renderPosts = async () => {
     </div>
     <p class="post-content">${shortenedContent}</p>
     `;
-    postsContainer.appendChild(postCard);
-    
+ // 为帖子卡片添加点击事件监听器，跳转到详情页面
     postCard.addEventListener("click", async function () {
-      try {
-        window.location.href = `postDetails.html?id=${post.post_id}`;
-      } catch (error) {
-        console.error("An error occurred while redirecting to post detail:", error);
-      }
-    });
+  
+        window.location.href = `postDetails.html?id=${post.id}`;
+      });
+    
+    postsContainer.appendChild(postCard);
   });
 };
 
 //调用函数
 getPosts();
+
+
+
 
 // //loading posts后面再做
 // var posts = [
