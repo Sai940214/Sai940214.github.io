@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const { Pool } = require("pg");
 
 const openDb = () => {
   const pool = new Pool({
@@ -14,16 +15,25 @@ const openDb = () => {
 
 const query = (sql, values = []) => {
   return new Promise(async (resolve, reject) => {
+const query = (sql, values = []) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const pool = openDb();
       const result = await pool.query(sql, values);
       resolve(result);
+      const pool = openDb();
+      const result = await pool.query(sql, values);
+      resolve(result);
     } catch (error) {
+      reject(error.message);
       reject(error.message);
     }
   });
 };
 
 module.exports = {
+  query,
+};
+
   query,
 };

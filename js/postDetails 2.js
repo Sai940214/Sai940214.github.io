@@ -94,96 +94,10 @@ function createPostElement(postDetail) {
                 window.location.href=`home.html`;
             }
         })
-
-//-------------------edit post-------------------
-        let isEditMode = false; // 标志当前是否处于编辑模式
-        let titleInputElement, contentTextAreaElement, saveButton; // 声明编辑元素变量
-
-        // When user clicks edit icon, toggle edit mode and create input fields
-        postEditElement.addEventListener('click', () => {
-            isEditMode = !isEditMode; // 切换编辑模式状态
-
-    if (isEditMode) {
-        // 进入编辑模式
-        // 创建输入框和保存按钮
-        titleInputElement = document.createElement("input");
-        titleInputElement.classList.add("edit-title");
-        titleInputElement.value = postDetail.title;
-
-        // 替换标题元素为输入框
-        titleElement.replaceWith(titleInputElement);
-
-        contentTextAreaElement = document.createElement("textarea");
-        contentTextAreaElement.classList.add("edit-content");
-        contentTextAreaElement.textContent = postDetail.content;
-
-        // 替换内容元素为输入框
-        contentElement.replaceWith(contentTextAreaElement);
-
-        saveButton = document.createElement("button");
-        saveButton.textContent = "Save";
-        saveButton.classList.add("btn", "btn-primary");
-        // 当用户点击保存按钮时
-        saveButton.addEventListener('click', async () => {
-        try {
-        const currentTimeStamp = new Date().toISOString();
-
-        const response = await fetch(`http://localhost:3001/post/editPost`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: titleInputElement.value,
-                content: contentTextAreaElement.value,
-                postId: postId,
-                username: user.username,
-                timestamp: currentTimeStamp // 更新时间戳
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // 直接使用返回的最新时间戳更新时间显示
-            savedElement.textContent = formattedTime(currentTimeStamp);
-
-            // 移除编辑模式并更新页面显示的帖子详情
-            titleElement.textContent = titleInputElement.value;
-            contentElement.textContent = contentTextAreaElement.value;
-            titleInputElement.replaceWith(titleElement);
-            contentTextAreaElement.replaceWith(contentElement);
-            postDetailElement.removeChild(saveButton);
-            postDetailElement.classList.remove('edit-mode');
-        } else {
-            console.error("更新帖子时出错:", data.error);
-        }
-
-    } catch (error) {
-        console.error("更新帖子时出错:", error);
-    }
-});
-
-
-        // 将保存按钮添加到页面中
-        postDetailElement.appendChild(saveButton);
-
-        // 如果在编辑模式下，聚焦到标题输入框
-        titleInputElement.focus();
-    } else {
-        // 退出编辑模式
-        // 移除标题和内容输入框以及保存按钮
-        titleInputElement.replaceWith(titleElement);
-        contentTextAreaElement.replaceWith(contentElement);
-        postDetailElement.removeChild(saveButton);
-    }
-});
-
-
-
     } else {
         postDetailElement.appendChild(titleElement);
     }
+
     postDetailElement.appendChild(authorElement);
     postDetailElement.appendChild(savedElement);
     postDetailElement.appendChild(contentElement);
