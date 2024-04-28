@@ -1,3 +1,14 @@
+import { BACKEND_URL } from '../config.js'
+
+// Define the Comment class
+class Comment{
+  constructor(postId, username, text){
+    this.postId = postId;
+    this.username = username;
+    this.text = text;
+  }
+}
+
 class Post {
   #id
   #title
@@ -54,6 +65,86 @@ class Post {
 
   get comments() {
     return this.#comments
+  }
+
+  // get post details
+  async fetchPostDetails(id) {
+    try {
+      const response = await fetch(`${BACKEND_URL}/post/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch post details');
+      }
+      const postData = await response.json();
+      // 解构获取的数据并返回
+      const { id: postID, title, content, image, time, username, comments } = postData;
+
+      // 解析 comments 数组中的每个对象，提取所需的属性
+      const parsedComments = [];
+      for (const comment of comments) {
+        const { text, username, time, comment_id} = comment;
+        parsedComments.push({ text, username, time, comment_id });
+      }
+      return { id: postID, title, content, image, time, username, comments: parsedComments };
+    } catch (error) {
+      throw error; // 如果发生错误，则抛出错误
+    }
+  }
+  
+  // delete post
+  async deletePost(postId, username){
+    try {
+      const response = await fetch(`${BACKEND_URL}/post/deletePost/${postId}?username=${username}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete post');
+    }
+    return 'Post deleted successfully';
+      } catch (error) {
+    throw error;
+    }
+  }
+
+
+  // Insert new comment to the database
+  async insertComment(postId, username, text) {
+    try {
+      const comment = new Comment(postId, username, text);
+      // for test
+      // console.log(comment);
+      const data = JSON.stringify(comment);
+      const response = await fetch(`${BACKEND_URL}/post/insertComment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+      });
+      if (!response.ok) {
+        throw new Error('Failed to insert comment');
+      }
+      const json = await response.json();
+      return json.id;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // delete comment
+  async deleteComment(comment_id, username){
+    try {
+      console.log(comment_id);
+      console.log(username);
+      const response = await fetch(`${BACKEND_URL}/post/deleteComment/${comment_id}?username=${username}`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'}
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete comment');
+      }
+      return 'Comment deleted successfully';
+        } catch (error) {
+      throw error;
+    }
   }
 }
 

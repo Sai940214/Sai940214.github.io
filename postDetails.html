@@ -9,8 +9,8 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link href="/css/mypost.css" rel="stylesheet" />
-    <title>my post</title>
+    <link href="/css/postDetails.css" rel="stylesheet" />
+    <title>Post Details</title>
   </head>
 
   <body>
@@ -41,6 +41,7 @@
         <a class="navbar-brand me-auto" href="/home.html "id="logo" >
           <img src="img/logo.png" alt="logo" width="40px">
         </a>
+        
         <!--sidebar-->
         <div
           class="offcanvas offcanvas-start"
@@ -78,6 +79,7 @@
 
               <li class="nav-item nav-item-flex" id="mypost">
                 <svg
+                  class="svg-sidebar"
                   width="20"
                   height="20"
                   viewBox="0 0 20 20"
@@ -107,6 +109,7 @@
 
               <li class="nav-item nav-bottom nav-item-flex" id="logout-display">
                 <svg
+                  class="svg-sidebar"
                   width="20"
                   height="20"
                   viewBox="0 0 20 20"
@@ -155,46 +158,36 @@
         ></a>
       </div>
     </nav>
-
-    <!-- post card -->
-    <div class="card" id="postContainer">
-      <div id="loading-message" style="display: none; margin-top: 100px">
-        <strong>loading...</strong>
+    <div class="container-lg" id="post-section">
+      <!-- post details -->
+      <div class="postWithEdit">
+        <div class="postDetailContainer"></div>
+         <!-- edit & delete -->
+        <div class="edit-section">
+        </div>
       </div>
 
-      <!-- <div class="card mb-3">
-        <div class="card-body" id="postWithoutImg">
-          <div class="title">
-            <h5 class="card-title">Post title</Title></h5>
-          </div>
-				  <p class="card-text">
-          <small class="text-body-secondary">2024/4/9 20:00</small>
-          </p>
-          <p class="card-text">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.
-          </p>
+      <!-- like button and count -->     
+      <div id="like">
+        <svg t="1713706877073" class="like-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4294" width="20" height="20"><path d="M512 901.747c-13.584 0-26.122-4.18-37.094-13.061-8.882-7.315-225.698-175.02-312.424-311.38-28.735-44.93-68.441-106.057-68.441-192.784 0-144.718 108.147-262.269 240.326-262.269 67.396 0 131.657 30.825 177.633 84.637 45.453-54.335 109.192-84.637 177.11-84.637 132.702 0 240.327 117.551 240.327 262.27 0 85.159-37.094 143.673-67.396 191.216l-1.045 1.567c-86.727 136.36-303.543 304.588-312.425 311.38-10.449 8.359-22.987 13.06-36.571 13.06zM334.367 164.049c-109.714 0-198.53 98.743-198.53 220.473 0 74.188 33.959 127.478 61.649 170.319 83.07 130.09 294.138 294.139 303.02 300.93 3.657 2.613 7.314 4.18 11.494 4.18s7.837-1.567 11.494-4.18c8.882-6.791 219.95-170.84 303.02-300.93l1.045-1.568c28.212-44.93 60.604-95.608 60.604-168.75 0-121.209-89.339-220.474-198.53-220.474-60.082 0-115.984 29.257-153.6 80.98l-6.27 8.881c-4.18 5.225-10.449 8.36-16.718 8.36s-13.061-3.135-16.718-8.36l-6.27-8.881c-39.706-51.2-96.13-80.98-155.69-80.98z" p-id="4295" fill="#8a8a8a"></path></svg>
+        <span id="like-count">0</span>
+      </div>
+
+      <!-- comment section-->
+      <div class="comment-section">
+        <div class="comment-input">
+          <input class="form-control form-control-sm" id="comment-input" type="text" placeholder="Comment here...">
         </div>
-        
-        <div class="card-body" id="postWithImg">
-          <div class="title">
-            <h5 class="card-title">Post title</Title></h5>
-          </div>
-				  <p class="card-text">
-            <small class="text-body-secondary">2024/4/9 20:00</small>
-          </p>
-				  <div class="textandPicture">
-					  <p class="card-text textWithImg">
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, ullam neque, est laboriosam deleniti illo eligendi reprehenderit nam nostrum voluptatibus quam porro maiores ut nobis laborum. Corporis sint unde soluta.
-					  </p>
-					  <div class="postImg">
-						  <img src="./img/demo1.jpeg" class="card-img-bottom"  alt="postPage" />
-					  </div>
-          </div>
-        </div> 
-       </div> -->
+        <button type="button" class="btn btn-primary" id="comment-btn">Comment</button>
+        <div class="comments">
+        </div>
+
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="./js/mypost.js"></script>
+    <script type="module" src="./js/postDetails.js"></script>
     <script type="module" src="./js/user.js"></script>
+
+    
   </body>
 </html>

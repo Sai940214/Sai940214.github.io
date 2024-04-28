@@ -180,22 +180,35 @@ class User {
     }
   }
 
-  async newPost(title, content, username) {
-    const data = JSON.stringify({
-      title: title,
-      content: content,
-      username: username,
-    });
+  async newPost(title, content, username, file) {
+    // const data = JSON.stringify({
+    //   title: title,
+    //   content: content,
+    //   username: username,
+    // });
 
     // console.log(data.title)
     // console.log(data.content)
     // console.log(data.username)
 
+    // create FormData
+    const formData = new FormData();
+
+    // add post information to FormData
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('username', username);
+
+    // add image file to FormData
+    if (file) {
+      formData.append('image', file);
+    }
+
     try {
       const response = await fetch(BACKEND_URL + "/post/create", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: data,
+        // headers: { "Content-Type": "application/json" },
+        body: formData,
       });
 
       if (response.ok) {

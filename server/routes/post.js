@@ -1,5 +1,7 @@
 const express = require("express");
 const { query } = require("../helpers/db.js");
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const postRouter = express.Router();
 
@@ -18,12 +20,12 @@ postRouter.get("/homepost", async (req, res) => {
 
 // 9.Apr Modification:
 // added register code
-postRouter.post("/create", async (req, res) => {
+postRouter.post("/create", upload.single('image'), async (req, res) => {
   const { title, content, username } = req.body;
+  const file = req.file; // 这里是上传的文件
+  
   // for testing
-  // console.log(username);
-  // console.log(title);
-  // console.log(content);
+  console.log(username, title, content);
 
   try {
     const userResult = await query(
@@ -36,9 +38,17 @@ postRouter.post("/create", async (req, res) => {
 
     const userId = userResult.rows[0].user_id;
 
+    let file_name = ""
+    if (req.files) {
+        const file = req.files.image
+        file_name = file.name
+        const uploadPath = `./public/images/${file_name}`
+        await file.mv(uploadPath)
+    }
+
     const postSql =
-      "INSERT INTO post (title, content, user_id) VALUES ($1, $2, $3) RETURNING *";
-    const postResult = await query(postSql, [title, content, userId]);
+      "INSERT INTO post (title, content, image_name, user_id) VALUES ($1, $2, $3, $4) RETURNING *";
+    const postResult = await query(postSql, [title, content, file_name, userId]);
     res.status(200).json(postResult.rows[0]);
   } catch (error) {
     console.error("Error creating post:", error);
@@ -68,7 +78,7 @@ postRouter.post("/myPost", async (req, res) => {
     // console.log(userId);
 
     const postResult = await query(
-      "SELECT title, content, time FROM post WHERE user_id = $1",
+      "SELECT post_id, title, content, time FROM post WHERE user_id = $1",
       [userId]
     );
     res.status(200).json(postResult.rows);
@@ -88,21 +98,77 @@ postRouter.get("/:postId", async (req, res) => {
   // for testing
   // console.log(postId);
 
+  // try {
+  //   const postResult = await query(
+  //     "SELECT u.username, p.post_id, p.title, p.content, p.time c.comment_id, c.text, c.time FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id WHERE p.post_id = $1",
+  //     [postId]
+  //   );
+  //   // for testing
+  //   // console.log(postResult);
+  //   if (postResult.rows.length === 0) {
+  //     return res.status(404).json({ error: "Post not found" });
+  //   } else {
+  //     const postDetail = postResult.rows[0];
+  //     return res.status(200).json(postDetail);
+  //   }
+  // } catch (error) {
+  //   console.error("Error cathing post:", error);
+  //   res.status(500).json({ error: error.message });
+  // }
+
+  // try {
+  //   const postResult = await query(
+  //     "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time, c.comment_id, c.text, c.time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
+  //     [postId]
+  //   );
+  //   if (postResult.rows.length === 0) {
+  //     return res.status(404).json({ error: "Post not found" });
+  //   } else {
+  //     const postDetail = {
+  //       post_id: postResult.rows[0].post_id,
+  //       title: postResult.rows[0].title,
+  //       content: postResult.rows[0].content,
+  //       time: postResult.rows[0].time,
+  //       username: postResult.rows[0].post_username,
+  //       comments: postResult.rows.map(row => ({
+  //         comment_id: row.comment_id,
+  //         text: row.text,
+  //         time: row.time,
+  //         username: row.comment_username
+  //       }))
+  //     };
+  //     return res.status(200).json(postDetail);
+  //   }
+  // } catch (error) {
+  //   console.error("Error catching post:", error);
+  //   res.status(500).json({ error: error.message });
+  // }
+
   try {
     const postResult = await query(
-      "SELECT title, content, time FROM post WHERE post_id = $1",
+      "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time AS post_time, c.comment_id, c.text, c.time AS comment_time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id LEFT JOIN comment c ON p.post_id = c.post_id LEFT JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
       [postId]
     );
-    // for testing
-    // console.log(postResult);
     if (postResult.rows.length === 0) {
       return res.status(404).json({ error: "Post not found" });
     } else {
-      const postDetail = postResult.rows[0];
+      const postDetail = {
+        post_id: postResult.rows[0].post_id,
+        title: postResult.rows[0].title,
+        content: postResult.rows[0].content,
+        time: postResult.rows[0].post_time,
+        username: postResult.rows[0].post_username,
+        comments: postResult.rows.map(row => ({
+          comment_id: row.comment_id,
+          text: row.text,
+          time: row.comment_time,
+          username: row.comment_username
+        })).filter(comment => comment.comment_id !== null)
+      };
       return res.status(200).json(postDetail);
     }
   } catch (error) {
-    console.error("Error cathing post:", error);
+    console.error("Error catching post:", error);
     res.status(500).json({ error: error.message });
   }
 
@@ -134,11 +200,20 @@ postRouter.post("/editPost", async (req, res) => {
 
     if (user !== username) {
       return res.status(403).json({ error: "You don't have permission to edit." })
-    } else {
-      const editSql = "UPDATE post SET title = $1, content = $2 , time = CURRENT_TIMESTAMP WHERE post_id = $3";
-      const editResult = await query(editSql, [title, content, postId]);
-      res.status(200).json({ success: true });
     }
+
+    // Check if there is an image file in the request
+    let file_name = ""
+    if (req.files && req.files.image) {
+        const file = req.files.image
+        file_name = file.name
+        const uploadPath = `./public/images/${file_name}`
+        await mv(file.tempFilePath, uploadPath)
+    }
+
+    const editSql = "UPDATE post SET title = $1, content = $2, image_name = $3, time = CURRENT_TIMESTAMP WHERE post_id = $4";
+    const editResult = await query(editSql, [title, content, file_name, postId]);
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error editing post:", error);
     res.status(500).json({ error: error.message });
@@ -148,10 +223,12 @@ postRouter.post("/editPost", async (req, res) => {
 });
 
 // create the backend for deleting post
-postRouter.post("/deletePost", async (req, res) => {
-  const { postId, username } = req.body;
+postRouter.delete("/deletePost/:postId", async (req, res) => {
+  // const { postId, username } = req.body;
+  const { username } = req.query;
+  const { postId } = req.params;
 
-  // for testing
+  // for testi
   // console.log(postId, username);
 
   try {
@@ -229,15 +306,18 @@ postRouter.post("/editComment", async (req, res) => {
 });
 
 // create the backend for deleting comment
-postRouter.post("/deleteComment", async (req, res) => {
-  const { username, commentId } = req.body;
+postRouter.delete("/deleteComment/:comment_id", async (req, res) => {
+  // const { username, comment_id } = req.body;
+  const { username } = req.query;
+  const { comment_id } = req.params;
 
   // for testing
-  // console.log(postId, username, commentId);
+  console.log(username, comment_id);
 
   try {
-    const checkResult = await query("SELECT user_id FROM comment WHERE comment_id = $1", [commentId]);
+    const checkResult = await query("SELECT user_id FROM comment WHERE comment_id = $1", [comment_id]);
     const userId = checkResult.rows[0].user_id;
+    console.log(userId)
 
     const userResult = await query("SELECT username FROM users WHERE user_id = $1", [userId]);
     const user = userResult.rows[0].username;
@@ -245,7 +325,7 @@ postRouter.post("/deleteComment", async (req, res) => {
     if (user !== username) {
       return res.status(403).json({ error: "You don't have permission to delete." })
     } else {
-      await query("DELETE FROM comment WHERE comment_id = $1", [commentId]);
+      await query("DELETE FROM comment WHERE comment_id = $1", [comment_id]);
       res.status(200).json({ success: true, message: "Comment deleted successfully" });
     }
   } catch (error) {

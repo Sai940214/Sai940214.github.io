@@ -42,12 +42,21 @@ const renderPosts = async () => {
     </div>
     <p class="post-content">${shortenedContent}</p>
     `;
+ // 为帖子卡片添加点击事件监听器，跳转到详情页面
+    postCard.addEventListener("click", async function () {
+  
+        window.location.href = `postDetails.html?id=${post.id}`;
+      });
+    
     postsContainer.appendChild(postCard);
   });
 };
 
 //调用函数
 getPosts();
+
+
+
 
 // //loading posts后面再做
 // var posts = [

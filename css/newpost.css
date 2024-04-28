@@ -53,6 +53,12 @@ body {
   width: 100%; /* 完整宽度 */
 }
 
+/* insert img */
+.icon{
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 /* 文本区域的样式 */
 #contentInput {
   border: none;

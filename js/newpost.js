@@ -8,7 +8,11 @@ let content_input = document.querySelector("#contentInput");
 let error = document.querySelector("#error");
 let postButton = document.querySelector("#postButton");
 
+// Added insert img function, 25.Apr
+let imageIcon = document.querySelector(".icon");
 
+
+// previous code
 postButton.addEventListener("click", async (event) => {
   event.preventDefault();
 
@@ -59,4 +63,33 @@ postButton.addEventListener("click", async (event) => {
     // Handle any errors
     console.error(error);
   }
+});
+
+
+// insert image function, 25.Apr
+// Listen for click on image icon
+imageIcon.addEventListener("click", () => {
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  
+  fileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    // Handle the selected file (e.g., upload it or display it)
+    console.log("Selected file:", file);
+
+  // Display the file name
+  const fileNameDisplay = document.createElement("p");
+  fileNameDisplay.textContent = file.name;
+  fileNameDisplay.style.display = "inline";
+
+  // Adjust the color of the file name
+  fileNameDisplay.style.color = "black";
+
+  // Append the file name display element next to the icon
+  imageIcon.parentNode.insertBefore(fileNameDisplay, imageIcon.nextSibling);
+  });
+  
+  // Trigger the file input dialog
+  fileInput.click();
 });
