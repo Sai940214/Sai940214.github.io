@@ -13,8 +13,52 @@ const postId = urlParams.get('id');
 
 // 获取页面上用于显示帖子详细内容的元素
 const postDetailContainer = document.querySelector('.postDetailContainer');
-
 let postDetailElement; // 保存帖子详情元素的引用
+const commentsContainer = document.querySelector(".comments");
+const likeButton = document.querySelector(".like-button");
+const likeCountElement = document.getElementById("like-count");
+
+
+// load whole page, including post details and comments
+async function loadPostDetails(id) {
+    try {
+        const postDetail = await post.fetchPostDetails(id);
+        // 如果帖子详情元素已经存在，则替换内容，否则创建新的帖子详情元素
+        if (postDetailElement) {
+            // 替换帖子内容
+            const newPostDetailElement = createPostElement(postDetail);
+            
+            postDetailContainer.replaceChild(newPostDetailElement, postDetailElement);
+            postDetailElement = newPostDetailElement; // 更新帖子详情元素的引用
+        } else {
+            // 创建新的帖子详情元素
+            postDetailElement = createPostElement(postDetail);
+            postDetailContainer.appendChild(postDetailElement);
+        }
+
+        // get comments from database
+        let comments = postDetail.comments;
+        // sort by time from old comments to new comments
+        comments.sort((a, b) => new Date(a.time) - new Date(b.time));
+        comments.forEach(comment => {
+            // put comments into comments container
+            const commentElement = createCommentElement(comment);
+            commentsContainer.appendChild(commentElement);
+        });
+
+        //get like numbers from database
+        let likeNumber = postDetail.like_count;
+        if(likeNumber==null){
+            likeNumber=0;
+        } 
+        likeCountElement.textContent = likeNumber;
+        
+        // load like button
+        setupLikeButton();
+    } catch (error) {
+        console.error("An error occurred while loading post details:", error);
+    }
+}
 
 // Create post details element
 function createPostElement(postDetail) {
@@ -197,70 +241,93 @@ function createPostElement(postDetail) {
     return postDetailElement;
 }
 
-async function loadPostDetails(id) {
-    try {
-        const postDetail = await post.fetchPostDetails(id);
-        // 如果帖子详情元素已经存在，则替换内容，否则创建新的帖子详情元素
-        if (postDetailElement) {
-            // 替换帖子内容
-            const newPostDetailElement = createPostElement(postDetail);
-            
-            postDetailContainer.replaceChild(newPostDetailElement, postDetailElement);
-            postDetailElement = newPostDetailElement; // 更新帖子详情元素的引用
-        } else {
-            // 创建新的帖子详情元素
-            postDetailElement = createPostElement(postDetail);
-            postDetailContainer.appendChild(postDetailElement);
-        }
-
-        // 获取帖子评论并显示在页面上
-        updateComments();
-
-        setupLikeButton();
-        setupCommentSection();
-    } catch (error) {
-        console.error("An error occurred while loading post details:", error);
-    }
-}
-
 //------------------------ like button ------------------------
 // 获取点赞按钮和点赞数显示的元素
 function setupLikeButton(){
-    const likeButton = document.querySelector(".like-button");
-    const likeCountElement = document.getElementById("like-count");
-    // Initialize the number of likes
-    let likeCount = 0;
+    // // Initialize the number of likes
+    // let likeCount = 0;
+    // let hasLiked = false;
+
     // add event listener when click 'like'
-    likeButton.addEventListener("click", () => {
-        likeCount++;
-        likeCountElement.textContent = likeCount.toString();
+    likeButton.addEventListener("click", async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/post/likePost`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ 
+                    postId: postId,
+                    username: user.username})
+            });
+    
+            const responseData = await response.json();
+    
+            if (response.ok) {
+                const { message, like_count } = responseData;
+                alert(message);
+                likeCountElement.textContent = like_count;
+            } else {
+                alert(responseData.error);
+            }
+        } catch (error) {
+            console.error("Error liking post:", error);
+            alert("An error occurred while liking the post.");
+        }
     });
+
+    //     try {
+    //         const likeInfo = await post.likePost(postId, user.username);
+    //         console.log(likeInfo.id);
+    //         // Check if like was successful and get the id
+    //         if (likeInfo && likeInfo.id) {
+    //             // Update local storage with the new like status
+    //             localStorage.setItem(postId, JSON.stringify({ hasLiked: true, likeCount: likeInfo.like_count }));
+    //             hasLiked = true;
+    //             likeCount = likeInfo.like_count;
+    //             likeCountElement.textContent = likeCount.toString(); // Update like count after backend response
+    //         } else {
+    //             // Display a message indicating user has already liked the post
+    //             alert("You have already liked this post");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error liking post:", error);
+    //         // Handle error
+    //     }
+    // });
 }
 
+
 //------------------------ comment section ------------------------
-// input new comment
-function setupCommentSection() {
-    const commentInput = document.getElementById("comment-input");
-    const commentButton = document.querySelector(".comment-section button");
-    
-    commentButton.addEventListener("click", async function() {
-        const newCommentText = commentInput.value.trim(); //get new comment from input
-        if (newCommentText !== "") {
-            try {
-                // 插入新评论到数据库
+// add new comment
+const commentInput = document.getElementById("comment-input");
+const commentButton = document.querySelector(".comment-section button");
+
+commentButton.addEventListener("click", async function() {
+    const newCommentText = commentInput.value.trim(); //get new comment from input
+    if (newCommentText !== "") {
+        try {
+            // insert new comment to database
                 await post.insertComment(postId, user.username, newCommentText);
-                // 清空评论容器
-                const commentsContainer = document.querySelector(".comments");
-                commentsContainer.innerHTML = "";
-                // 重新加载帖子详情以更新评论和帖子内容
-                await loadPostDetails(postId);
+                 // get comments frome database
+                 const postDetail = await post.fetchPostDetails(postId);
+                 postDetail.comments.sort((a, b) => new Date(a.time) - new Date(b.time));
+                 const latestComment = postDetail.comments[postDetail.comments.length - 1]
+                 const commentElement = createCommentElement(latestComment);
+                 commentsContainer.appendChild(commentElement);
+
+                // 将评论容器滚动到底部，确保最新评论可见
+                commentsContainer.scrollTop = commentsContainer.scrollHeight;
+              
+                // 重新加载帖子详情以更新评论和帖子内
+                // await loadPostDetails(postId);
                 commentInput.value = ""; // 清空评论输入框
+                // updateComments();
             } catch (error) {
                 console.error("An error occurred while inserting comment:", error);
             }
         }
-    })
-};
+    });
 
 // create element to display a comment
 function createCommentElement(comment) {
@@ -302,6 +369,7 @@ function createCommentElement(comment) {
             const confirmed = confirm("Are you sure you want to delete this comment?");
             if (confirmed) {
                 await post.deleteComment(comment_id, username);
+                commentsContainer.innerHTML = "";
                 await loadPostDetails(postId);
             }
         })
@@ -314,25 +382,6 @@ function createCommentElement(comment) {
     return commentElement;
 };
 
-// 更新帖子评论
-async function updateComments() {
-    try {
-        // 获取帖子详情
-        const postDetail = await post.fetchPostDetails(postId);
-        const comments = postDetail.comments;
-        if (comments && comments.length > 0) {
-            const commentsContainer = document.querySelector(".comments");
-            // 清空现有评论元素
-            commentsContainer.innerHTML = "";
-            comments.forEach(comment => {
-                const commentElement = createCommentElement(comment);
-                commentsContainer.appendChild(commentElement);
-            });
-        }
-    } catch (error) {
-        console.error("An error occurred while updating comments:", error);
-    }
-}
 
 // 在页面加载完成后，调用加载帖子详细内容的函数
 window.addEventListener("DOMContentLoaded", () => {

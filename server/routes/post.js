@@ -95,90 +95,36 @@ postRouter.post("/myPost", async (req, res) => {
 postRouter.get("/:postId", async (req, res) => {
   const postId = req.params.postId;
 
-  // for testing
-  // console.log(postId);
-
-  // try {
-  //   const postResult = await query(
-  //     "SELECT u.username, p.post_id, p.title, p.content, p.time c.comment_id, c.text, c.time FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id WHERE p.post_id = $1",
-  //     [postId]
-  //   );
-  //   // for testing
-  //   // console.log(postResult);
-  //   if (postResult.rows.length === 0) {
-  //     return res.status(404).json({ error: "Post not found" });
-  //   } else {
-  //     const postDetail = postResult.rows[0];
-  //     return res.status(200).json(postDetail);
-  //   }
-  // } catch (error) {
-  //   console.error("Error cathing post:", error);
-  //   res.status(500).json({ error: error.message });
-  // }
-
-  // try {
-  //   const postResult = await query(
-  //     "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time, c.comment_id, c.text, c.time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
-  //     [postId]
-  //   );
-  //   if (postResult.rows.length === 0) {
-  //     return res.status(404).json({ error: "Post not found" });
-  //   } else {
-  //     const postDetail = {
-  //       post_id: postResult.rows[0].post_id,
-  //       title: postResult.rows[0].title,
-  //       content: postResult.rows[0].content,
-  //       time: postResult.rows[0].time,
-  //       username: postResult.rows[0].post_username,
-  //       comments: postResult.rows.map(row => ({
-  //         comment_id: row.comment_id,
-  //         text: row.text,
-  //         time: row.time,
-  //         username: row.comment_username
-  //       }))
-  //     };
-  //     return res.status(200).json(postDetail);
-  //   }
-  // } catch (error) {
-  //   console.error("Error catching post:", error);
-  //   res.status(500).json({ error: error.message });
-  // }
-
   try {
-    const postResult = await query(
-      "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time AS post_time, c.comment_id, c.text, c.time AS comment_time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id LEFT JOIN comment c ON p.post_id = c.post_id LEFT JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
-      [postId]
-    );
+    const postResult = await query("SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time AS post_time, p.image_name, p.like_count AS post_like, c.comment_id, c.text, c.time AS comment_time, c.like_count AS comment_like, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id LEFT JOIN comment c ON p.post_id = c.post_id LEFT JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",[postId]);
     if (postResult.rows.length === 0) {
       return res.status(404).json({ error: "Post not found" });
     } else {
-      const postDetail = {
-        post_id: postResult.rows[0].post_id,
-        title: postResult.rows[0].title,
-        content: postResult.rows[0].content,
-        time: postResult.rows[0].post_time,
-        username: postResult.rows[0].post_username,
-        comments: postResult.rows.map(row => ({
-          comment_id: row.comment_id,
-          text: row.text,
-          time: row.comment_time,
-          username: row.comment_username
-        })).filter(comment => comment.comment_id !== null)
-      };
+    const postDetail = {
+      post_id: postResult.rows[0].post_id,
+      title: postResult.rows[0].title,
+      content: postResult.rows[0].content,
+      time: postResult.rows[0].post_time,
+      image_name: postResult.rows[0].image_name,
+      username: postResult.rows[0].post_username,
+      like_count: postResult.rows[0].post_like,
+      comments: postResult.rows.map(row => ({
+      comment_id: row.comment_id,
+      text: row.text,
+      time: row.comment_time,
+      like_count: row.comment_like,
+      username: row.comment_username
+    })).filter(comment => comment.comment_id !== null)
+  };
       return res.status(200).json(postDetail);
+    }} catch (error) {
+      console.error("Error catching post:", error);
+      res.status(500).json({ error: error.message });
     }
-  } catch (error) {
-    console.error("Error catching post:", error);
-    res.status(500).json({ error: error.message });
-  }
 
-  // for testing
-  // console.log(postDetail);
+// for testing
+// console.log(postDetail);
 });
-
-
-
-
 
 // the following parts are waiting for the confirmation from the frontend
 // for post: edit/delete
@@ -331,6 +277,89 @@ postRouter.delete("/deleteComment/:comment_id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting post:", error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// limit likePost number
+postRouter.post("/likePost", async (req, res) => {
+  const { postId, username } = req.body;
+
+  try {
+      // Check if the user exists
+      const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
+      if (userResult.rows.length === 0) {
+          return res.status(404).json({ error: "User not found" });
+      }
+      const userId = userResult.rows[0].user_id;
+
+      // Check if the post exists
+      const postResult = await query("SELECT * FROM post WHERE post_id = $1", [postId]);
+      if (postResult.rows.length === 0) {
+          return res.status(404).json({ error: "Post not found" });
+      }
+
+      // Check if the user has already liked the post
+      const hasLikedResult = await query("SELECT * FROM post_like WHERE post_id = $1 AND user_id = $2", [postId, userId]);
+      if (hasLikedResult.rows.length > 0) {
+          return res.status(403).json({ error: "You have already liked this post" });
+      }
+
+      // Insert the like into the post_like table
+      const likePostSql = "INSERT INTO post_like (post_id, user_id) VALUES ($1, $2)";
+      await query(likePostSql, [postId, userId]);
+
+      // Increment the like_count in the post table
+      const incrementLikeCountSql = "UPDATE post SET like_count = COALESCE(like_count, 0) + 1 WHERE post_id = $1";
+      await query(incrementLikeCountSql, [postId]);
+
+      // Get the updated like_count
+      const updatedPostResult = await query("SELECT like_count FROM post WHERE post_id = $1", [postId]);
+      const likeCount = updatedPostResult.rows[0].like_count;
+
+      res.status(200).json({ message: "Post liked successfully", like_count: likeCount });
+  } catch (error) {
+      console.error("Error liking post:", error);
+      res.status(500).json({ error: error.message });
+  }
+});
+
+postRouter.post("/likeComment", async (req, res) => {
+  const { commentId, username } = req.body;
+
+  try {
+      // Check if the user exists
+      const userResult = await query("SELECT user_id FROM users WHERE username = $1", [username]);
+      if (userResult.rows.length === 0) {
+          return res.status(404).json({ error: "User not found" });
+      }
+      const userId = userResult.rows[0].user_id;
+
+      // Check if the comment exists
+      const commentResult = await query("SELECT * FROM comment WHERE comment_id = $1", [commentId]);
+      if (commentResult.rows.length === 0) {
+          return res.status(404).json({ error: "Comment not found" });
+      }
+
+      // Check if the user has already liked the comment
+      const hasLikedResult = await query("SELECT * FROM comment_like WHERE comment_id = $1 AND user_id = $2", [commentId, userId]);
+      if (hasLikedResult.rows.length > 0) {
+          return res.status(403).json({ error: "You have already liked this comment" });
+      }
+
+      // Insert the like into the comment_like table
+      await query("INSERT INTO comment_like (comment_id, user_id) VALUES ($1, $2)", [commentId, userId]);
+
+      // Increment the like_count in the comment table
+      await query("UPDATE comment SET like_count = COALESCE(like_count, 0) + 1 WHERE comment_id = $1", [commentId]);
+
+      // Get the updated like_count
+      const updatedCommentResult = await query("SELECT like_count FROM comment WHERE comment_id = $1", [commentId]);
+      const likeCount = updatedCommentResult.rows[0].like_count;
+
+      res.status(200).json({ message: "Comment liked successfully", like_count: likeCount });
+  } catch (error) {
+      console.error("Error liking comment:", error);
+      res.status(500).json({ error: error.message });
   }
 });
 
