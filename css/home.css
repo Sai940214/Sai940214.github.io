@@ -108,10 +108,17 @@ hr {
 /*-------banner-------*/
 
 .carousel-item img {
-  height: 800px; 
+  height: 850px; 
   width: 100%;   
   object-fit: cover; /* 覆盖整个元素区域，必要时进行裁剪 */
   object-position: center; 
+}
+
+@media (max-width: 979px) {
+  .carousel-item img {
+    height: 300px; 
+    object-position: center;
+  }
 }
 
 
@@ -135,7 +142,7 @@ hr {
   text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 979px) {
   .carousel-caption p {
       display: none; /* 在小屏幕上隐藏段落文本 */
   }
