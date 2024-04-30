@@ -106,6 +106,15 @@ hr {
 }
 
 /*-------banner-------*/
+
+.carousel-item img {
+  height: 800px; 
+  width: 100%;   
+  object-fit: cover; /* 覆盖整个元素区域，必要时进行裁剪 */
+  object-position: center; 
+}
+
+
 .carousel-control-prev:hover {
   background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
 }
