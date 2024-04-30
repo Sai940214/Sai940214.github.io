@@ -82,10 +82,25 @@ function createPostElement(postDetail) {
     contentElement.textContent = postDetail.content;
 
     const pictureElement = document.createElement("img");
-    pictureElement.classList.add("post-picture");
-    pictureElement.setAttribute("src", postDetail.picture);
-    pictureElement.setAttribute("alt", "picture");
+    pictureElement.classList.add("post-image");
 
+    if (postDetail.image_name) {
+        pictureElement.setAttribute("src", `server/public/images/${postDetail.image_name}`);
+        pictureElement.setAttribute("alt", "Post Image");
+        postDetailElement.appendChild(pictureElement);
+    } else {
+        pictureElement.setAttribute("alt", "No image available");
+    }
+
+
+        pictureElement.onload = function() {
+            console.log("Image loaded successfully");
+        };
+        pictureElement.onerror = function() {
+            console.error("Error loading image. Check the image path and server configuration.");
+        };
+        
+   
     // display delete & edit icon of current post if logged user is who create this post
     if (postDetail.username === user.username) {
         // create edit icon element
@@ -233,7 +248,7 @@ function createPostElement(postDetail) {
     postDetailElement.appendChild(contentElement);
 
     // check if the post have a picture
-    if(post.picture){
+    if(post.image_name){
         // if the picture exits, insert it into the page
         postDetailElement.appendChild(pictureElement);
     } 

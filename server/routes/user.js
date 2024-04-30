@@ -19,10 +19,11 @@ userRouter.post("/login", async (req, res) => {
               res
                 .status(200)
                 .json({
-                  id: user.id,
+                  id: user.user_id,
                   username: user.username,
                   email: user.email,
                 });
+                console.log(user.user_id, user.username, user.email)
             } else {
               res.statusMessage = "Invalid login";
               res.status(401).json({ error: "Invalid login" });
