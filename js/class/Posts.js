@@ -36,12 +36,11 @@ class Posts {
     this.#posts = []; // 清空posts数组，防止数据重复
 
     json.forEach(node => {
-      const post = new Post(node.post_id, node.title, node.content, null, node.time, node.username, null);
+      const post = new Post(node.post_id, node.title, node.content, node.image_name, node.time, node.username, null);
       this.#posts.unshift(post); // 将新帖子添加到数组开头
     }
   );
 
-  
   }
 }
 

@@ -8,6 +8,7 @@ const user = new User()
 console.log(user.isLoggedIn)
 console.log(user.email)
 console.log("profile_email: " + profile_email)
+console.log(user.id)
 
 
 if(user.isLoggedIn) {
