@@ -69,7 +69,7 @@ postRouter.post("/myPost", async (req, res) => {
     // console.log(userId);
 
     const postResult = await query(
-      "SELECT post_id, title, content, time FROM post WHERE user_id = $1",
+      "SELECT post_id, title, content, time,image_name FROM post WHERE user_id = $1",
       [userId]
     );
     res.status(200).json(postResult.rows);

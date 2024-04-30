@@ -169,6 +169,7 @@ hr {
   left: auto; /* 移除固定的定位属性 */
   margin-left: 8px; 
   margin-right: 8px; 
+  position: relative;
 }
 
 .post-card:hover {
@@ -202,7 +203,7 @@ hr {
 
 .author-details {
   /* 作者名字和发布时间容器样式 */
-  margin-left: 8px; /* 调整名字和时间距离头像的间距 */
+  margin-left: 8px; 
 }
 
 .author-name{
@@ -215,5 +216,21 @@ hr {
   display: block; /* 确保名字和时间显示在不同行 */
 }
 
+/*------postcard-img------*/
+.post-image {
+  position: absolute; 
+  top: 50%; 
+  right: 35px;
+  transform: translateY(-50%); 
+  width: 20%; 
+  height: auto; 
+  max-height: 150px;
+  max-width: 200px; 
+}
+/* @media (min-width: 900px) {
+  .post-image {
 
-
+   max-width: 100px;
+    max-height: 100px;
+  }
+} */

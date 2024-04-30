@@ -120,37 +120,32 @@ function createPostCard(post) {
   }
   content.textContent = limitedContent;
 
-  // create thumbnail
-  const thumbnail = document.createElement("img");
-  thumbnail.classList.add("card-img-bottom");
-  thumbnail.setAttribute("src", post.thumbnail);
-  thumbnail.setAttribute("alt", "Thumbnail");
-
   // append title, time to cardBody
   card.appendChild(title);
   card.appendChild(time);
+  card.appendChild(content);
 
-  // check if the post has a thumbnail
-  if (post.thumbnail) {
-    // create container for content and thumbnail
-    const contentAndThumbnail = document.createElement("div");
-    contentAndThumbnail.classList.add("contentAndThumbnail");
 
-    // add content with thumbnail class
-    content.classList.add("contentWithThumbnail");
-    // add postThumbnail class
-    thumbnail.classList.add("postThumbnail");
-
-    // append content and thumbnail to contentAndThumbnail
-    contentAndThumbnail.appendChild(content);
-    contentAndThumbnail.appendChild(thumbnail);
-
-    // append contentAndThumbnail to card body
-    card.appendChild(contentAndThumbnail);
-  } else {
-    // append content to card body
-    card.appendChild(content);
+  // check if the post has a image
+  if (post.image_name && post.image_name.trim() !== ""){
+    const imageUrl = `server/public/images/${post.image_name}`; // 构建完整的图片路径
+    const image = document.createElement("img");
+    image.classList.add("card-image");
+    image.setAttribute("src", imageUrl); // 设置图片的src属性为完整路径
+    image.setAttribute("alt", "image");
+    card.appendChild(image);
+  
+    // 添加图片加载事件处理程序
+    image.onload = function() {
+      console.log("Image loaded successfully");
+    };
+  
+    // 添加图片加载错误事件处理程序
+    image.onerror = function() {
+      console.error("Error loading image. Check the image path and server configuration.");
+    };
   }
+  
 
   card.addEventListener("click", async function () {
     try {

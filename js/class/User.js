@@ -14,7 +14,10 @@ class User {
       this.#id = userObject.id;
       this.#username = userObject.username;
       this.#email = userObject.email;
-    }
+      console.log("Loaded user id: ", this.#id); // 调试信息
+  } else {
+      console.log("No user in sessionStorage"); // 调试信息
+  }
   }
 
   get id() {
@@ -35,10 +38,6 @@ class User {
 
   get newPassword() {
     return this.#newPassword;
-  }
-
-  get isLoggedIn() {
-    return this.#username !== undefined ? true : false;
   }
 
   //判断是否log
@@ -180,49 +179,24 @@ class User {
     }
   }
 
-  async newPost(title, content, username, file) {
-    // const data = JSON.stringify({
-    //   title: title,
-    //   content: content,
-    //   username: username,
-    // });
-
-    // console.log(data.title)
-    // console.log(data.content)
-    // console.log(data.username)
-
-    // create FormData
-    const formData = new FormData();
-
-    // add post information to FormData
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('username', username);
-
-    // add image file to FormData
-    if (file) {
-      formData.append('image', file);
-    }
-
+  async newPost(formData) {
     try {
-      const response = await fetch(BACKEND_URL + "/post/create", {
-        method: "POST",
-        // headers: { "Content-Type": "application/json" },
-        body: formData,
-      });
+        const response = await fetch(BACKEND_URL + '/post/create', {
+            method: 'post',
+            body: formData
+        });
 
-      if (response.ok) {
-        const json = await response.json();
-        // 根据需要处理json
-        return json; // 可能包含帖子的信息或确认
-      } else {
-        throw new Error(response.statusText);
-      }
+        const json = await response.json(); // 假设即使在错误情况下也返回JSON
+        if (response.ok) {
+            return json;
+        } else {
+            throw new Error(json.message || 'Unknown error occurred');
+        }
     } catch (error) {
-      console.error("An error occurred during post creation:", error);
-      throw error;
+        console.error("Error creating post:", error);
+        throw error;  // 可以选择重新抛出错误，让调用者处理
     }
-  }
+}
 
   async getPostsByUsername(username) {
     const data = JSON.stringify({ username: username });
