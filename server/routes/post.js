@@ -2,6 +2,7 @@ const express = require("express");
 const { query } = require("../helpers/db.js");
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const fs = require('fs').promises;
 
 const postRouter = express.Router();
 
@@ -20,39 +21,29 @@ postRouter.get("/homepost", async (req, res) => {
 
 // 9.Apr Modification:
 // added register code
-postRouter.post("/create", upload.single('image'), async (req, res) => {
-  const { title, content, username } = req.body;
-  const file = req.file; // 这里是上传的文件
-  
-  // for testing
-  console.log(username, title, content);
-
+postRouter.post("/create", async (req, res) => {
   try {
-    const userResult = await query(
-      "SELECT user_id FROM users WHERE username = $1",
-      [username]
-    );
-    if (userResult.rows.length === 0) {
-      return res.status(404).json({ error: "User not found" });
+    let file_name = "";
+    if (req.files && req.files.image) {
+      const file = req.files.image;
+      // 生成一个基于时间戳的新文件名
+      const newFileName = Date.now() + "_" + file.name;
+      const uploadPath = `./public/images/${newFileName}`;
+
+      // 异步移动文件，确保文件保存后再执行数据库操作
+      await file.mv(uploadPath);
+      file_name = newFileName;
     }
 
-    const userId = userResult.rows[0].user_id;
+    // for testing
+    console.log(req.body.title, req.body.content, file_name, req.body.user_id);
 
-    let file_name = ""
-    if (req.files) {
-        const file = req.files.image
-        file_name = file.name
-        const uploadPath = `./public/images/${file_name}`
-        await file.mv(uploadPath)
-    }
-
-    const postSql =
-      "INSERT INTO post (title, content, image_name, user_id) VALUES ($1, $2, $3, $4) RETURNING *";
-    const postResult = await query(postSql, [title, content, file_name, userId]);
-    res.status(200).json(postResult.rows[0]);
+    const sql = 'INSERT INTO post (title, content, image_name, user_id) VALUES ($1, $2, $3, $4) RETURNING *';
+    const result = await query(sql, [req.body.title, req.body.content, file_name, req.body.user_id]);
+    res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error("Error creating post:", error);
-    res.status(500).json({ error: error.message });
+    console.error("Error in creating post:", error);
+    res.status(500).json({ message: "Internal server error", details: error.message });
   }
 });
 
@@ -95,58 +86,9 @@ postRouter.post("/myPost", async (req, res) => {
 postRouter.get("/:postId", async (req, res) => {
   const postId = req.params.postId;
 
-  // for testing
-  // console.log(postId);
-
-  // try {
-  //   const postResult = await query(
-  //     "SELECT u.username, p.post_id, p.title, p.content, p.time c.comment_id, c.text, c.time FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id WHERE p.post_id = $1",
-  //     [postId]
-  //   );
-  //   // for testing
-  //   // console.log(postResult);
-  //   if (postResult.rows.length === 0) {
-  //     return res.status(404).json({ error: "Post not found" });
-  //   } else {
-  //     const postDetail = postResult.rows[0];
-  //     return res.status(200).json(postDetail);
-  //   }
-  // } catch (error) {
-  //   console.error("Error cathing post:", error);
-  //   res.status(500).json({ error: error.message });
-  // }
-
-  // try {
-  //   const postResult = await query(
-  //     "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time, c.comment_id, c.text, c.time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id JOIN comment c ON p.post_id = c.post_id JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
-  //     [postId]
-  //   );
-  //   if (postResult.rows.length === 0) {
-  //     return res.status(404).json({ error: "Post not found" });
-  //   } else {
-  //     const postDetail = {
-  //       post_id: postResult.rows[0].post_id,
-  //       title: postResult.rows[0].title,
-  //       content: postResult.rows[0].content,
-  //       time: postResult.rows[0].time,
-  //       username: postResult.rows[0].post_username,
-  //       comments: postResult.rows.map(row => ({
-  //         comment_id: row.comment_id,
-  //         text: row.text,
-  //         time: row.time,
-  //         username: row.comment_username
-  //       }))
-  //     };
-  //     return res.status(200).json(postDetail);
-  //   }
-  // } catch (error) {
-  //   console.error("Error catching post:", error);
-  //   res.status(500).json({ error: error.message });
-  // }
-
   try {
     const postResult = await query(
-      "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time AS post_time, c.comment_id, c.text, c.time AS comment_time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id LEFT JOIN comment c ON p.post_id = c.post_id LEFT JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
+      "SELECT u.username AS post_username, p.post_id, p.title, p.content, p.time AS post_time, p.image_name, c.comment_id, c.text, c.time AS comment_time, cu.username AS comment_username FROM post p JOIN users u ON p.user_id = u.user_id LEFT JOIN comment c ON p.post_id = c.post_id LEFT JOIN users cu ON c.user_id = cu.user_id WHERE p.post_id = $1",
       [postId]
     );
     if (postResult.rows.length === 0) {
@@ -157,6 +99,7 @@ postRouter.get("/:postId", async (req, res) => {
         title: postResult.rows[0].title,
         content: postResult.rows[0].content,
         time: postResult.rows[0].post_time,
+        image_name: postResult.rows[0].image_name,
         username: postResult.rows[0].post_username,
         comments: postResult.rows.map(row => ({
           comment_id: row.comment_id,
