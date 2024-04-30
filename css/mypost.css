@@ -115,6 +115,7 @@ hr {
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
+  position: relative;
 }
 
 .card-body:hover {
@@ -139,11 +140,13 @@ hr {
   justify-content: space-between;
 }
 
-.contentWithThumbnail {
-  margin-right: 50px;
-}
-
-.postThumbnail {
-  width: 200px;
-  border-radius: 8px;
+.card-image {
+  position: absolute; 
+  top: 50%; 
+  right: 25px;
+  transform: translateY(-50%); 
+  width: 20%; 
+  height: auto; 
+  max-height: 100px;
+  max-width: 150px; 
 }
