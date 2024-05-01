@@ -244,6 +244,12 @@ outline:none;
 box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.25);
 }
 
+button.btn.btn-primary {
+  display: block;
+  margin-bottom:40px !important;
+}
+
+
 /* —————————————————————— like style —————————————————————— */
 .like-button{
 cursor: pointer;

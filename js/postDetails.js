@@ -146,12 +146,12 @@ function createPostElement(postDetail) {
         })
 
 //-------------------edit post-------------------
-let isEditMode = false; // 标志当前是否处于编辑模式
-let titleInputElement, contentTextAreaElement, saveButton; // 声明编辑元素变量
+        let isEditMode = false; // 标志当前是否处于编辑模式
+        let titleInputElement, contentTextAreaElement, saveButton; // 声明编辑元素变量
 
-// When user clicks edit icon, toggle edit mode and create input fields
-postEditElement.addEventListener('click', () => {
-    isEditMode = !isEditMode; // 切换编辑模式状态
+        // When user clicks edit icon, toggle edit mode and create input fields
+        postEditElement.addEventListener('click', () => {
+            isEditMode = !isEditMode; // 切换编辑模式状态
 
     if (isEditMode) {
         // 进入编辑模式
@@ -175,55 +175,56 @@ postEditElement.addEventListener('click', () => {
         saveButton.classList.add("btn", "btn-primary");
         // 当用户点击保存按钮时
         saveButton.addEventListener('click', async () => {
-            try {
-                const currentTimeStamp = new Date().toISOString();
+        try {
+        const currentTimeStamp = new Date().toISOString();
 
-                const formData = new FormData();
-                formData.append("title", titleInputElement.value);
-                formData.append("content", contentTextAreaElement.value);
-                formData.append("postId", postId);
-                formData.append("username", user.username);
-
-                // Check if an image is already present, if not, append the existing image to the formData
-                if (!postDetail.image_name) {
-                    formData.append("image", post.image);
-                }
-
-                const response = await fetch(`http://localhost:3001/post/editPost`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    // 直接使用返回的最新时间戳更新时间显示
-                    savedElement.textContent = formattedTime(currentTimeStamp);
-
-                    // 移除编辑模式并更新页面显示的帖子详情
-                    titleElement.textContent = titleInputElement.value;
-                    contentElement.textContent = contentTextAreaElement.value;
-                    titleInputElement.replaceWith(titleElement);
-                    contentTextAreaElement.replaceWith(contentElement);
-                    postDetailElement.removeChild(saveButton);
-                    postDetailElement.classList.remove('edit-mode');
-
-                    if (postDetail.image_name) {
-                        pictureElement.setAttribute("src", `server/public/images/${postDetail.image_name}`);
-                        pictureElement.setAttribute("alt", "Post Image");
-                        postDetailElement.appendChild(pictureElement);
-                    } else {
-                        pictureElement.setAttribute("alt", "No image available");
-                    }
-
-                    return postDetailElement;
-                } else {
-                    console.error("更新帖子时出错:", data.error);
-                }
-            } catch (error) {
-                console.error("更新帖子时出错:", error);
-            }
+        const response = await fetch(`http://localhost:3001/post/editPost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: titleInputElement.value,
+                content: contentTextAreaElement.value,
+                postId: postId,
+                image_name: post.image_name,
+                username: user.username,
+                timestamp: currentTimeStamp // 更新时间戳
+            })
         });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // 直接使用返回的最新时间戳更新时间显示
+            savedElement.textContent = formattedTime(currentTimeStamp);
+
+            // 移除编辑模式并更新页面显示的帖子详情
+            titleElement.textContent = titleInputElement.value;
+            contentElement.textContent = contentTextAreaElement.value;
+            titleInputElement.replaceWith(titleElement);
+            contentTextAreaElement.replaceWith(contentElement);
+            postDetailElement.removeChild(saveButton);
+            postDetailElement.classList.remove('edit-mode');
+
+            if (postDetail.image_name) {
+                pictureElement.setAttribute("src", `server/public/images/${postDetail.image_name}`);
+                pictureElement.setAttribute("alt", "Post Image");
+                postDetailElement.appendChild(pictureElement);
+            } else {
+                pictureElement.setAttribute("alt", "No image available");
+            }
+
+            return postDetailElement;
+        } else {
+            console.error("更新帖子时出错:", data.error);
+        }
+
+    } catch (error) {
+        console.error("更新帖子时出错:", error);
+    }
+});
+
 
         // 将保存按钮添加到页面中
         postDetailElement.appendChild(saveButton);
@@ -238,7 +239,6 @@ postEditElement.addEventListener('click', () => {
         postDetailElement.removeChild(saveButton);
     }
 });
-
 
 
 
