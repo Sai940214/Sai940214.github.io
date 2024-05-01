@@ -36,7 +36,7 @@ CREATE TABLE post_like (
     post_like_id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (post_id) REFERENCES post(post_id),
+    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     UNIQUE(post_id, user_id)
 );
@@ -45,7 +45,7 @@ CREATE TABLE comment_like (
     comment_like_id SERIAL PRIMARY KEY,
     comment_id INT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (comment_id) REFERENCES comment(comment_id),
+    FOREIGN KEY (comment_id) REFERENCES comment(comment_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     UNIQUE(comment_id, user_id)
 );

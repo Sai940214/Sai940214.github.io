@@ -193,6 +193,12 @@ justify-content: space-between;
 }
 
 /* —————————————————————— post edit & delete —————————————————————— */
+.edit-container {
+  display: flex;
+  flex-direction: column;  /* 垂直排列 */
+  align-items: center;     /* 水平居中 */
+}
+
 .edit-section {
 display: flex;
 flex-direction: row;
@@ -237,6 +243,12 @@ border-color: #007bff;
 outline:none;
 box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.25);
 }
+
+button.btn.btn-primary {
+  display: block;
+  margin-bottom:40px !important;
+}
+
 
 /* —————————————————————— like style —————————————————————— */
 .like-button{

@@ -47,6 +47,9 @@ const renderPosts = async () => {
 
  // 只有当 post.image_name 存在且不为空时，才添加图片元素
  if (post.image_name && post.image_name.trim() !== "") {
+  // const imageContainer = document.createElement("div");
+  // imageContainer.classList.add("image-container");
+
   const imageElement = document.createElement("img");
   imageElement.src = `server/public/images/${post.image_name}`;
   imageElement.alt = "Post image";

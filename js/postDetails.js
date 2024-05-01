@@ -187,6 +187,7 @@ function createPostElement(postDetail) {
                 title: titleInputElement.value,
                 content: contentTextAreaElement.value,
                 postId: postId,
+                image_name: post.image_name,
                 username: user.username,
                 timestamp: currentTimeStamp // 更新时间戳
             })
@@ -205,6 +206,16 @@ function createPostElement(postDetail) {
             contentTextAreaElement.replaceWith(contentElement);
             postDetailElement.removeChild(saveButton);
             postDetailElement.classList.remove('edit-mode');
+
+            if (postDetail.image_name) {
+                pictureElement.setAttribute("src", `server/public/images/${postDetail.image_name}`);
+                pictureElement.setAttribute("alt", "Post Image");
+                postDetailElement.appendChild(pictureElement);
+            } else {
+                pictureElement.setAttribute("alt", "No image available");
+            }
+
+            return postDetailElement;
         } else {
             console.error("更新帖子时出错:", data.error);
         }

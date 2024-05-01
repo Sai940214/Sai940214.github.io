@@ -122,42 +122,87 @@ postRouter.get("/:postId", async (req, res) => {
 // for comment: insert/edit/delete
 
 // 16.Apr create the backend for editing post
+// postRouter.post("/editPost", async (req, res) => {
+//   const { title, content, postId, username } = req.body;
+
+//   // for testing
+//   // console.log(title, content, postId, username);
+
+//   try {
+//     const checkResult = await query("SELECT user_id FROM post WHERE post_id = $1", [postId]);
+//     const userId = checkResult.rows[0].user_id;
+
+//     const userResult = await query("SELECT username FROM users WHERE user_id = $1", [userId]);
+//     const user = userResult.rows[0].username;
+
+//     if (user !== username) {
+//       return res.status(403).json({ error: "You don't have permission to edit." })
+//     }
+
+//     // Check if there is an image file in the request
+//     let file_name = ""
+//     if (req.files && req.files.image) {
+//         const file = req.files.image
+//         file_name = file.name
+//         const uploadPath = `./public/images/${file_name}`
+//         await mv(file.tempFilePath, uploadPath)
+//     }
+
+//     const editSql = "UPDATE post SET title = $1, content = $2, time = CURRENT_TIMESTAMP WHERE post_id = $4";
+//     const editResult = await query(editSql, [title, content, file_name, postId]);
+//     res.status(200).json({ success: true });
+//   } catch (error) {
+//     console.error("Error editing post:", error);
+//     res.status(500).json({ error: error.message });
+//   }
+//   // for testing
+//   // console.log(editResult);
+// });
 postRouter.post("/editPost", async (req, res) => {
   const { title, content, postId, username } = req.body;
 
-  // for testing
-  // console.log(title, content, postId, username);
-
   try {
-    const checkResult = await query("SELECT user_id FROM post WHERE post_id = $1", [postId]);
-    const userId = checkResult.rows[0].user_id;
+      const checkResult = await query("SELECT user_id, image_name FROM post WHERE post_id = $1", [postId]);
+      const { user_id: userId, image_name: existingImageName } = checkResult.rows[0];
 
-    const userResult = await query("SELECT username FROM users WHERE user_id = $1", [userId]);
-    const user = userResult.rows[0].username;
+      const userResult = await query("SELECT username FROM users WHERE user_id = $1", [userId]);
+      const user = userResult.rows[0].username;
 
-    if (user !== username) {
-      return res.status(403).json({ error: "You don't have permission to edit." })
-    }
+      if (user !== username) {
+          return res.status(403).json({ error: "You don't have permission to edit." })
+      }
 
-    // Check if there is an image file in the request
-    let file_name = ""
-    if (req.files && req.files.image) {
-        const file = req.files.image
-        file_name = file.name
-        const uploadPath = `./public/images/${file_name}`
-        await mv(file.tempFilePath, uploadPath)
-    }
+      let file_name = existingImageName; // Initialize with existing image name
 
-    const editSql = "UPDATE post SET title = $1, content = $2, image_name = $3, time = CURRENT_TIMESTAMP WHERE post_id = $4";
-    const editResult = await query(editSql, [title, content, file_name, postId]);
-    res.status(200).json({ success: true });
+      // Check if there is an image file in the request
+      if (req.files && req.files.image) {
+          const file = req.files.image
+          file_name = file.name
+          const uploadPath = `./public/images/${file_name}`
+          await mv(file.tempFilePath, uploadPath)
+
+          // Remove existing image if it exists
+          if (existingImageName) {
+              fs.unlinkSync(`./public/images/${existingImageName}`);
+          }
+      }
+
+      // Update only if a new image is provided or if no image was present initially
+      if (file_name || !existingImageName) {
+          const editSql = "UPDATE post SET title = $1, content = $2, image_name = $3, time = CURRENT_TIMESTAMP WHERE post_id = $4";
+          await query(editSql, [title, content, file_name, postId]);
+      } else {
+          const editSql = "UPDATE post SET title = $1, content = $2, time = CURRENT_TIMESTAMP WHERE post_id = $3";
+          await query(editSql, [title, content, postId]);
+      }
+
+      res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error editing post:", error);
-    res.status(500).json({ error: error.message });
+      console.error("Error editing post:", error);
+      res.status(500).json({ error: error.message });
   }
-  // for testing
-  // console.log(editResult);
 });
+
 
 // create the backend for deleting post
 postRouter.delete("/deletePost/:postId", async (req, res) => {

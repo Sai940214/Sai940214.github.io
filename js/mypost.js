@@ -97,13 +97,17 @@ function createPostCard(post) {
   const card = document.createElement("div");
   card.classList.add("card-body");
 
+  // create container for title, time, and content
+  const textContainer = document.createElement("div");
+  textContainer.classList.add("text-container");
+
   // create title
   const title = document.createElement("h5");
   title.classList.add("card-title");
   title.textContent = post.title;
 
   // create time
- const time = document.createElement("p");
+  const time = document.createElement("p");
   time.classList.add("card-time");
   const formattedTime = formatTime(post.time); // 格式化时间
   const smallTime = document.createElement("small");
@@ -120,13 +124,15 @@ function createPostCard(post) {
   }
   content.textContent = limitedContent;
 
-  // append title, time to cardBody
-  card.appendChild(title);
-  card.appendChild(time);
-  card.appendChild(content);
+  // append title, time, and content to text container
+  textContainer.appendChild(title);
+  textContainer.appendChild(time);
+  textContainer.appendChild(content);
 
+  // append text container to card body
+  card.appendChild(textContainer);
 
-  // check if the post has a image
+  // check if the post has an image
   if (post.image_name && post.image_name.trim() !== ""){
     const imageUrl = `server/public/images/${post.image_name}`; // 构建完整的图片路径
     const image = document.createElement("img");
@@ -157,6 +163,7 @@ function createPostCard(post) {
 
   return card;
 }
+
 
 // 页面加载完成后，加载用户发布的所有帖子
 window.addEventListener("load", function () {
