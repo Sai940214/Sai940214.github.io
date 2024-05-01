@@ -17,8 +17,9 @@ class Post {
   #time
   #author
   #comments
+  #like_count
 
-  constructor(id,title,content,image_name,time,author,comments) {
+  constructor(id,title,content,image_name,time,author,comments,like_count) {
     this.#id = id
     this.#title = title
     this.#content = content
@@ -26,6 +27,7 @@ class Post {
     this.#time = time
     this.#author = author
     this.#comments = comments
+    this.#like_count = like_count
   }
 
   get id() {
@@ -67,6 +69,11 @@ class Post {
     return this.#comments
   }
 
+  get like_count() {
+    return this.#like_count
+  }
+
+
   // get post details
   async fetchPostDetails(id) {
     try {
@@ -76,7 +83,7 @@ class Post {
       }
       const postData = await response.json();
       // 解构获取的数据并返回
-      const { id: postID, title, content, image_name, time, username, comments } = postData;
+      const { id: postID, title, content, image_name, time, username, comments, like_count } = postData;
 
       // 解析 comments 数组中的每个对象，提取所需的属性
       const parsedComments = [];
@@ -84,7 +91,7 @@ class Post {
         const { text, username, time, comment_id} = comment;
         parsedComments.push({ text, username, time, comment_id });
       }
-      return { id: postID, title, content, image_name, time, username, comments: parsedComments };
+      return { id: postID, title, content, image_name, time, username, comments: parsedComments, like_count };
     } catch (error) {
       throw error; // 如果发生错误，则抛出错误
     }
