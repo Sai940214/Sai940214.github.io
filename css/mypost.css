@@ -109,7 +109,8 @@ hr {
 .card-body {
   background-color: #faf9f0;
   border: 1px solid #ece7c0;
-  margin: 12px auto;
+  padding: 25px;
+  margin-top: 20px;
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
@@ -126,6 +127,9 @@ hr {
 
 .card-title {
   font-size: 1.8rem;
+}
+.card-text{
+  margin-right: 10px;
 }
 
 .card-time{
@@ -145,15 +149,24 @@ hr {
 
 
 @media screen and (max-width: 900px) {
- 
+  .card-body{
+    margin: 5px auto;
+  }
   .card-image {
     width: 125px;  /* Smaller width for smaller screens */
     height: 100px;  /* Smaller height for smaller screens */
     border-radius: 8px; 
+    margin-left: 18px;
   }
 
   .card-title {
     font-size: 1.1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .card-text {
+    font-size: 0.7rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
