@@ -183,6 +183,7 @@ hr {
   margin-bottom: 20px;
   border: 1px solid #ece7c0;
   transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .post-card:hover {
