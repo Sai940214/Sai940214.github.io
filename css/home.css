@@ -1,7 +1,13 @@
+.font{
+  font-family: "Schibsted Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight:500;
+  font-style: normal;
+  font-size:medium;
+}
 body {
   background-color: #fffdfe;
 }
-
 .image {
   text-align: left;
 }
@@ -108,7 +114,7 @@ hr {
 /*-------banner-------*/
 
 .carousel-item img {
-  height: 850px; 
+  height: 650px; 
   width: 100%;   
   object-fit: cover; /* 覆盖整个元素区域，必要时进行裁剪 */
   object-position: center; 
@@ -187,7 +193,7 @@ hr {
 }
 
 .post-card:hover {
-  box-shadow: 0 8px 10px rgba(60, 40, 5, 0.1);
+  box-shadow: 0 8px 10px rgba(73, 50, 9, 0.1);
 }
 
 
